@@ -8,7 +8,8 @@ function App() {
   // const [count, setCount] = useState(0)
 
   return (
-    <div className='relative w-screen'>
+    <div className='w-screen'>
+      <Sidebar />
     </div>
   )
 }
