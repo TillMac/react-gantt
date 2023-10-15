@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar'
 function App() {
 
   return (
-    <div className='w-screen'>
+    <div className='w-screen flex'>
       <Sidebar />
       <AddTaskModal />
     </div>
