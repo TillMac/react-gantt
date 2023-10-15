@@ -15,6 +15,15 @@
  
     --primary: 220.9 39.3% 11%;
     --primary-foreground: 210 20% 98%;
+
+    --theme: '#1A76D2';
+    --theme-foreground: '#1A76D2';
+
+    --gray: '#c0c0c0';
+    --gray-foreground: '#c0c0c0';
+
+    --text: '#545454';
+    --text-foreground: '#545454';
  
     --secondary: 220 14.3% 95.9%;
     --secondary-foreground: 220.9 39.3% 11%;
