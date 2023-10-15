@@ -5,7 +5,7 @@ import { Button } from './ui/button';
 
 const Sidebar = () => {
   return (
-    <div className="w-72 flex flex-col gap-4 bg-gray-200 h-screen sticky z-10 p-0 mt-0 ml-0 mr-auto border-r-2 border-gray">
+    <aside className="w-1/4 flex flex-col gap-4 bg-gray-200 h-screen sticky z-10 p-0 m-0 border-r-2 border-gray">
       <section className="w-full pl-6 pt-6 flex flex-wrap items-center">
         <Button className='w-5/6 m-0 px-3 py-1 justify-start hover:bg-gray hover:border-gray rounded-xl'>
           <FontAwesomeIcon icon={faTableCellsLarge} className='text-theme text-xl' />
@@ -22,7 +22,7 @@ const Sidebar = () => {
           <FontAwesomeIcon icon={faSliders} className='text-text text-xl' />
         </Button>
       </section>
-    </div>
+    </aside>
   )
 }
 
