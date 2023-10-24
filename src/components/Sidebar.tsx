@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFolderPlus, faSliders, faTableCellsLarge } from '@fortawesome/free-solid-svg-icons';
+import { faSliders, faTableCellsLarge } from '@fortawesome/free-solid-svg-icons';
 import ProjectList from './ProjectList';
 import { Button } from './ui/button';
+import AddingProject from './AddingProject';
 
 const Sidebar = () => {
   return (
@@ -14,10 +15,7 @@ const Sidebar = () => {
       </section>
       <ProjectList />
       <section className='w-full px-4 py-2 mb-0 mt-auto flex items-center border-t-2 border-gray'>
-        <Button className='m-0 px-3 py-1 justify-start hover:bg-gray hover:border-gray rounded-xl'>
-          <FontAwesomeIcon icon={faFolderPlus} className='text-text text-xl' />
-          <h4 className='text-xl pl-4 text-text font-mono'>New Project</h4>
-        </Button>
+        <AddingProject />
         <Button className='m-0 hover:bg-gray hover:border-gray rounded-full ml-auto mr-0'>
           <FontAwesomeIcon icon={faSliders} className='text-text text-xl' />
         </Button>

@@ -1,5 +1,5 @@
 import './App.css'
-import AddTaskModal from './components/AddTaskModal'
+import AddingTask from './components/AddingTask'
 import Sidebar from './components/Sidebar'
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
   return (
     <div className='w-screen'>
       <Sidebar />
-      <AddTaskModal />
+      <AddingTask />
     </div>
   )
 }
