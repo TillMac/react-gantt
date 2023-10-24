@@ -21,7 +21,7 @@ const AddingProject = () => {
       projectName: '',
     }
   });
-  const onProjectSubmit = (data: z.infer<typeof projectFormSchema>) => {
+  const projectSubmitHandler = (data: z.infer<typeof projectFormSchema>) => {
     console.log('data pro', data.projectName)
     fetch('https://react-gantt-default-rtdb.firebaseio.com/projects.json', {
       method: 'POST',
@@ -50,7 +50,7 @@ const AddingProject = () => {
             Add New Project
           </DialogHeader>
             <Form {...projectForm}>
-              <form onSubmit={projectForm.handleSubmit(onProjectSubmit)} className="flex flex-col gap-8">
+              <form onSubmit={projectForm.handleSubmit(projectSubmitHandler)} className="flex flex-col gap-8">
               <FormField
                 control={projectForm.control}
                 name='projectName'
