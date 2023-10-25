@@ -6,11 +6,16 @@ import {
 } from "react-router-dom";
 import App from './App.tsx'
 import './index.css'
+import LoginPage from './pages/LoginPage.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
   },
 ]);
 
