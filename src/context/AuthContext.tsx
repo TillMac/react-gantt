@@ -1,21 +1,27 @@
 import { createContext, ReactNode, useState } from "react";
+import { z } from 'zod';
 
 type Props = {
   children?: ReactNode;
 }
 
-type IAuthContext = {
-  authenticated: {
-    isAuthenticated: boolean;
-    accessToken: string;
-  };
-  setAuthenticated: (newState: {
-    isAuthenticated: boolean;
-    accessToken: string;
-  }) => void;
-};
+const IAuthContextSchema = z.object({
+  authenticated: z.object({
+    isGuest: z.boolean(),
+    isAuthenticated: z.boolean(),
+    accessToken: z.string(),
+  }),
+  setAuthenticated: z.function().args(z.object({
+    isGuest: z.boolean(),
+    isAuthenticated: z.boolean(),
+    accessToken: z.string(),
+  })).returns(z.void()),
+});
+
+type IAuthContext = z.infer<typeof IAuthContextSchema>;
 
 const initialValue = {
+  isGuest: false,
   isAuthenticated: false,
   accessToken: '',
 };
