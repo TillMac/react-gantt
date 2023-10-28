@@ -13,6 +13,7 @@ const LoginPage = () => {
     onSuccess: codeResponse => {
       console.log('codeResponse', codeResponse);
       setAuthenticated({
+        isGuest: false,
         isAuthenticated: true,
         accessToken: codeResponse.access_token,
       });
