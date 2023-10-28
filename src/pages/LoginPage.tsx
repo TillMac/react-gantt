@@ -2,25 +2,12 @@ import React, { useContext } from 'react'
 import loginImage from '@/assets/logo.png';
 import loginPageBg from '@/assets/loginBg.jpg';
 import { Button } from '@/components/ui/button';
-import { useGoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '@/context/AuthContext';
 
 const LoginPage = () => {
   const { setAuthenticated } = useContext(AuthContext);
   const navigate = useNavigate();
-  const loginGoogle = useGoogleLogin({
-    onSuccess: codeResponse => {
-      console.log('codeResponse', codeResponse);
-      setAuthenticated({
-        isGuest: false,
-        isAuthenticated: true,
-        accessToken: codeResponse.access_token,
-      });
-      navigate('/');
-    },
-    onError: () => console.log('Login Failed'),
-  });
 
   return (
     <div className='w-screen h-screen flex flex-col gap-20 bg-cover bg-gray-400 bg-blend-multiply justify-center select-none' style={{backgroundImage: `url(${loginPageBg})`}}>

@@ -3,14 +3,10 @@ import { faArrowRightFromBracket, faTableCellsLarge } from '@fortawesome/free-so
 import ProjectList from './ProjectList';
 import { Button } from './ui/button';
 import AddingProject from './AddingProject';
-import { googleLogout } from '@react-oauth/google';
-import { useContext } from 'react';
 import { AuthContext } from '@/context/AuthContext';
 
 const Sidebar = () => {
   const { setAuthenticated } = useContext(AuthContext);
-  const logoutGoogle = () => {
-    googleLogout();
     setAuthenticated({
       isGuest: false,
       isAuthenticated: false,
@@ -29,7 +25,6 @@ const Sidebar = () => {
       <ProjectList />
       <section className='w-full px-4 py-2 mb-0 mt-auto flex items-center border-t-2 border-gray'>
         <AddingProject />
-        <Button className='m-0 hover:bg-gray hover:border-gray rounded-full ml-auto mr-0' onClick={() => logoutGoogle()}>
           <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-text text-xl' />
         </Button>
       </section>
