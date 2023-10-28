@@ -12,7 +12,6 @@ import './index.css'
 import LoginPage from './pages/LoginPage.tsx';
 import { AuthContext, AuthProvider } from './context/AuthContext.tsx';
 
-// eslint-disable-next-line react-refresh/only-export-components
 const PrivateRoutes = () => {
   const { authenticated } = useContext(AuthContext);
   if (!authenticated.isAuthenticated) return <Navigate to='/login' replace />

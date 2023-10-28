@@ -3,7 +3,6 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from './ui/dialog'
 import { Input } from './ui/input'
 import { format } from "date-fns"
-// import { CustomDatePicker } from './CustomDatePicker'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
 import * as z from 'zod'
@@ -21,13 +20,12 @@ const task: Record<string, string> = {
   dueDate: 'Due Date',
 };
 
-// type taskFormNameType = "taskName" | "projectName";
 type taskFormInputNameType = "taskName" | "projectName";
 type taskFormDateNameType = "startDate" | "dueDate";
 
 const taskFormSchema = z.object({
   taskName: z.string().min(1, {
-    message: 'task name must be at least 1 character, and lower than 20 characters.',
+    message: 'Task name must be at least 1 character, and lower than 20 characters.',
   }).max(20),
   projectName: z.string({
     required_error: "Please select a project.",

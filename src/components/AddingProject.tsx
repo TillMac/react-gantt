@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 
 const projectFormSchema = z.object({
   projectName: z.string({
-    required_error: "Please select a project.",
+    required_error: "Please name your project.",
   }),
 });
 

@@ -12,6 +12,7 @@ const Sidebar = () => {
   const logoutGoogle = () => {
     googleLogout();
     setAuthenticated({
+      isGuest: false,
       isAuthenticated: false,
       accessToken: '',
     })
