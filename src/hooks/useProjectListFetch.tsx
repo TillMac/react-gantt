@@ -4,17 +4,20 @@ import { useState, useEffect } from 'react';
 type RequestSchema  = {
   uId: string,
   method: HttpMethod,
-  body: IProject,
+  accessToken?: string | null,
+  body?: IProject,
 };
 
 type UId = null | string;
+type AccessToken = null | string;
 
-const useProjectListFetch = (initialUId: UId = null, initialMethod: HttpMethod = 'GET', initialBody: IProject = null) => {
+const useProjectListFetch = (initialUId: UId = null, initialAccessToken: AccessToken = null, initialMethod: HttpMethod = 'GET', initialBody: IProject = null) => {
   // 狀態管理
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<IProject[]>();
   const [error, setError] = useState<unknown>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [uId, setUId] = useState<UId>(initialUId);
+  const [accessToken, setAccessToken] = useState<AccessToken>(initialAccessToken);
   const [method, setMethod] = useState<HttpMethod>(initialMethod);
   const [body, setBody] = useState<IProject>(initialBody);
 
@@ -24,7 +27,7 @@ const useProjectListFetch = (initialUId: UId = null, initialMethod: HttpMethod =
 
     const fetchData = async () => {
       setIsLoading(true);
-      const url = `${fetchUrl}/${uId}/projects.json`
+      const url = `${fetchUrl}${uId}/projects.json?auth=${accessToken}`
 
       try {
         const response = await fetch(url, {
@@ -41,7 +44,8 @@ const useProjectListFetch = (initialUId: UId = null, initialMethod: HttpMethod =
 
         // 若是 DELETE method 可能沒有回傳內容
         const responseData = method === 'DELETE' ? {} : await response.json();
-        setData(responseData);
+        const projectsArray: IProject[] = Object.values(responseData);
+        setData(projectsArray);
       } catch (error) {
         setError(error);
       } finally {
@@ -50,15 +54,16 @@ const useProjectListFetch = (initialUId: UId = null, initialMethod: HttpMethod =
     };
 
     fetchData();
-  }, [uId, method, body]); // 當 uId、method 或 body 改變時，重新執行 useEffect
+  }, [uId, accessToken, method, body]); // 當 uId、method 或 body 改變時，重新執行 useEffect
 
   return {
     data,
     error,
     isLoading,
-    setRequest: ({ uId, method = 'GET', body = null }: RequestSchema) => {
+    setRequest: ({ uId, method = 'GET', accessToken = null, body = null }: RequestSchema) => {
       setUId(uId);
       setMethod(method);
+      setAccessToken(accessToken);
       setBody(body);
     },
   };
