@@ -3,27 +3,63 @@ import { faArrowRightFromBracket, faTableCellsLarge } from '@fortawesome/free-so
 import ProjectList from './ProjectList';
 import { Button } from './ui/button';
 import AddingProject from './AddingProject';
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { NavLink } from 'react-router-dom';
+import useProjectListFetch from '@/hooks/useProjectListFetch';
 
 const Sidebar = () => {
+  const [reloadData, setReloadData] = useState<boolean>(false);
+  const { data, setRequest } = useProjectListFetch();
+  const { currentUser } = useAuth();
+
+  const handleFetchData = () => {
+    console.log('setRequest 前');
+    setRequest({
+      uId: currentUser.uid,
+      method: 'GET',
+      accessToken: currentUser.accessToken,
+    })
+    setReloadData(false);
+    console.log('setRequest 後');
+  }
+
+  useEffect(() => {
+    handleFetchData();
+  }, []);
+
+  useEffect(() => {
+    if (reloadData) {
+      console.log('重來哩', reloadData.toString())
+      handleFetchData();
+    }
+  }, [reloadData]);
+
   const { logout } = useAuth();
   const logoutGoogle = async(e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     await logout();
-  };
+  }; 
 
   return (
     <div className="w-1/5 flex flex-col gap-4 bg-gray-200 h-screen sticky z-10 p-0 mt-0 ml-0 mr-auto border-r-2 border-gray">
       <section className="w-full pl-6 pt-6 flex flex-wrap items-center">
-        <Button className='w-5/6 m-0 px-3 py-1 justify-start hover:bg-gray hover:border-gray rounded-xl'>
+        <NavLink to='/dashboard' className='w-5/6 m-0 px-3 py-1 justify-start flex items-center hover:bg-gray hover:border-gray rounded-xl' style={({ isActive }) => {
+          return {
+            backgroundColor: isActive ? "#545454" : "",
+            color: isActive ? 'white' : '#545454',
+            ':hover': {
+              backgroundColor: '#c0c0c0',
+            },
+          };
+        }}>
           <FontAwesomeIcon icon={faTableCellsLarge} className='text-theme text-xl' />
-          <h4 className='text-xl pl-4 text-text font-mono'>Dashboard</h4>
-        </Button>
+          <h4 className='text-xl pl-4 font-mono'>Dashboard</h4>
+        </NavLink>
       </section>
-      <ProjectList />
+      <ProjectList data={data} />
       <section className='w-full px-4 py-2 mb-0 mt-auto flex items-center border-t-2 border-gray'>
-        <AddingProject />
+        <AddingProject uId={currentUser.uid} onProjectAdded={() => setReloadData(true)} />
         <Button className='m-0 hover:bg-gray hover:border-gray rounded-full ml-auto mr-0' onClick={logoutGoogle}>
           <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-text text-xl' />
         </Button>
