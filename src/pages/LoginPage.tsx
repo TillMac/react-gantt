@@ -12,6 +12,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   const googleAuthProvider = new GoogleAuthProvider();
   googleAuthProvider.addScope('https://www.googleapis.com/auth/calendar');
+  googleAuthProvider.addScope('https://www.googleapis.com/auth/firebase.database');
   const loginGoogle = () => {
     signInWithPopup(auth, googleAuthProvider)
       .then((codeResponse) => {
