@@ -7,6 +7,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
 import * as z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
+import { DialogClose } from '@radix-ui/react-dialog'
 
 const projectFormSchema = z.object({
   projectName: z.string({
@@ -64,6 +65,9 @@ const AddingProject = () => {
                 )} 
               />
               <Button type='submit' className='bg-gray-500 text-white rounded-xl col-span-4 hover:bg-theme border-transparent'>Submit</Button>
+              <DialogClose asChild>
+                <Button type='submit' className='bg-gray-500 text-white rounded-xl col-span-4 hover:bg-theme border-transparent'>Submit</Button>
+              </DialogClose>
             </form>
           </Form>
         </DialogContent>
