@@ -1,4 +1,4 @@
-import ViewModeSelector from '@/components/viewModeSelector';
+import ViewModeSelector from '@/components/ViewModeSelector';
 import { faPenToSquare, faStar, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ReactNode, useState } from 'react'
