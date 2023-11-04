@@ -43,7 +43,13 @@ type IMilestone = z.infer<typeof IMilestoneSchema>;
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-const fetchUrl = 'https://ticket-gantt-default-rtdb.firebaseio.com';
+enum viewModes {
+  list = 0,
+  gantt = 1,
+  kanban = 2,
+}
+
+const fetchUrl = 'https://ticket-gantt-default-rtdb.firebaseio.com/';
 
 export type { IProject, ITask, IMilestone, HttpMethod };
-export { fetchUrl };
+export { fetchUrl, viewModes };

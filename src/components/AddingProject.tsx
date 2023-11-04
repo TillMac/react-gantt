@@ -7,6 +7,10 @@ import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
 import * as z from 'zod'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
+import useProjectListFetch from '@/hooks/useProjectListFetch'
+import { v4 as uuidv4 } from 'uuid';
+import { useAuth } from '@/context/AuthContext'
+import { DialogClose } from '@radix-ui/react-dialog'
 
 const projectFormSchema = z.object({
   projectName: z.string({
@@ -14,27 +18,35 @@ const projectFormSchema = z.object({
   }),
 });
 
-const AddingProject = () => {
+type Props = {
+  uId: string,
+  onProjectAdded: () => void,
+};
+
+const AddingProject = ({ uId, onProjectAdded }: Props) => {
+  const { setRequest } = useProjectListFetch();
+  const { currentUser } = useAuth();
   const projectForm = useForm<z.infer<typeof projectFormSchema>>({
     resolver: zodResolver(projectFormSchema),
     defaultValues: {
       projectName: '',
     }
   });
-  const projectSubmitHandler = (data: z.infer<typeof projectFormSchema>) => {
-    console.log('data pro', data.projectName)
-    fetch('https://react-gantt-default-rtdb.firebaseio.com/projects.json', {
+  const projectSubmitHandler = (formData: z.infer<typeof projectFormSchema>) => {
+    setRequest({
+      uId: uId,
       method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({
-        name: data.projectName,
-        message: 'we did it!',
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
+      accessToken: currentUser.accessToken,
+      body: {
+        type: "project",
+        name: formData.projectName,
+        id: uuidv4(),
+        description: 'none',
+        createTime: new Date(),
+        updateTime: new Date(),
+      }
+    });
+    onProjectAdded();
   }
 
   return (
@@ -63,7 +75,9 @@ const AddingProject = () => {
                   </FormItem>
                 )} 
               />
-              <Button type='submit' className='bg-gray-500 text-white rounded-xl col-span-4 hover:bg-theme border-transparent'>Submit</Button>
+              <DialogClose asChild>
+                <Button type='submit' className='bg-gray-500 text-white rounded-xl col-span-4 hover:bg-theme border-transparent'>Submit</Button>
+              </DialogClose>
             </form>
           </Form>
         </DialogContent>

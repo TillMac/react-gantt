@@ -1,32 +1,35 @@
-import React, { useContext } from 'react'
 import loginImage from '@/assets/logo.png';
 import loginPageBg from '@/assets/loginBg.jpg';
 import { Button } from '@/components/ui/button';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '@/context/AuthContext';
+import { useAuth } from '@/context/AuthContext';
 import { auth } from '@/firebase';
+import { useEffect } from 'react';
 
 const LoginPage = () => {
-  const { setAuthenticated } = useContext(AuthContext);
+  const { currentUser } = useAuth();
   const navigate = useNavigate();
   const googleAuthProvider = new GoogleAuthProvider();
   googleAuthProvider.addScope('https://www.googleapis.com/auth/calendar');
+  googleAuthProvider.addScope('https://www.googleapis.com/auth/firebase.database');
   const loginGoogle = () => {
     signInWithPopup(auth, googleAuthProvider)
       .then((codeResponse) => {
         console.log('codeResponse', codeResponse);
-        if (typeof codeResponse.user.email === 'string') {
-          setAuthenticated({
-            isGuest: false,
-            isAuthenticated: true,
-            accessToken: codeResponse.user.email,
-          });
-          navigate('/');
+        if (currentUser) {
+          navigate('/dashboard');
         }
       })
       .catch((error) => console.log('error!', error.code));
   };
+
+  useEffect(() => {
+    if (!currentUser) {
+      return;
+    }
+    navigate('/dashboard');
+  }, [currentUser]);
 
   return (
     <div className='w-screen h-screen flex flex-col gap-20 bg-cover bg-gray-400 bg-blend-multiply justify-center select-none' style={{backgroundImage: `url(${loginPageBg})`}}>
