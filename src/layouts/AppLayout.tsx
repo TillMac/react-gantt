@@ -8,7 +8,7 @@ function AppLayout() {
   return (
     <div className='w-screen flex'>
       <Sidebar />
-      <div className='w-full h-screen'>
+      <div className='w-full h-screen p-10'>
         <Outlet />
       </div>
       <AddingTask />
