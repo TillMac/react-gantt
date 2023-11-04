@@ -1,6 +1,7 @@
-import React from 'react'
+import ViewModeSelector from '@/components/viewModeSelector';
 import { faPenToSquare, faStar, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { ReactNode, useState } from 'react'
 
 const projectNav: Record<string, ReactNode> = {
   star: <FontAwesomeIcon icon={faStar} className='text-2xl hover:text-yellow-300 hover:cursor-pointer' />,
@@ -9,8 +10,9 @@ const projectNav: Record<string, ReactNode> = {
 };
 
 const ProjectArea = () => {
+  const [viewMode, setViewMode] = useState<number>(1);
+
   return (
-    <div>ProjectArea</div>
     <>
       <section className="w-full flex justify-between items-center">
         <h2 className='text-3xl'>Project_Name</h2>
@@ -26,6 +28,7 @@ const ProjectArea = () => {
           }
         </div>
       </section>
+      <ViewModeSelector viewMode={viewMode} setViewMode={setViewMode} />
     </>
   )
 }
