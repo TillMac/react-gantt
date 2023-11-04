@@ -19,9 +19,20 @@ const ProjectList = ({ data }: Props) => {
           .map((project: IProject) => {
             if (project) {
               return (
-                <NavLink to={`/${project.id}`} key={project.id} className='w-5/6 m-0 px-3 py-1 justify-start items-center flex hover:bg-gray hover:border-gray rounded-xl'>
-                  <FontAwesomeIcon icon={faFolder} className='text-text text-xl' />
-                  <h4 className='text-xl pl-4 text-text font-mono'>{project.name}</h4>
+                <NavLink to={`/${project.id}`} key={project.id} className='w-5/6 m-0 px-3 py-1 justify-start items-center flex hover:bg-gray hover:border-gray rounded-xl'  style={({ isActive }) => {
+                  return {
+                    backgroundColor: isActive ? "#545454" : "",
+                    color: isActive ? 'white' : '#545454',
+                  };
+                }}>
+                  {
+                    ({isActive}) => (
+                      <>
+                        <FontAwesomeIcon icon={faFolder} className={`${isActive ? 'text-white' : 'text-text'} text-xl`} />
+                        <h4 className={`text-xl pl-4 font-mono ${isActive ? 'text-white' : 'text-text'}`}>{project.name}</h4>
+                      </>
+                    )
+                  }
                 </NavLink>
               );
             }

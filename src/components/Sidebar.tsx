@@ -48,13 +48,16 @@ const Sidebar = () => {
           return {
             backgroundColor: isActive ? "#545454" : "",
             color: isActive ? 'white' : '#545454',
-            ':hover': {
-              backgroundColor: '#c0c0c0',
-            },
           };
         }}>
-          <FontAwesomeIcon icon={faTableCellsLarge} className='text-theme text-xl' />
-          <h4 className='text-xl pl-4 font-mono'>Dashboard</h4>
+        {
+          ({isActive}) => (
+            <>
+              <FontAwesomeIcon icon={faTableCellsLarge} className={`${isActive ? 'text-theme' : 'text-text'} text-xl`} />
+              <h4 className={`text-xl pl-4 font-mono ${isActive ? 'text-white' : 'text-text'}`}>Dashboard</h4>
+            </>
+          )
+        }
         </NavLink>
       </section>
       <ProjectList data={data} />
