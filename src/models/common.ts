@@ -3,6 +3,7 @@ import { z } from 'zod';
 const IProjectSchema = z.object({
   name: z.string(),
   id: z.string().uuid(),
+  isStar: z.boolean(),
   description: z.string(),
   type: z.literal('project'),
   createTime: z.date().optional(),

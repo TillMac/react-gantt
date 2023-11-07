@@ -35,7 +35,7 @@ const AddingProject = ({ uId, onProjectAdded }: Props) => {
   const projectSubmitHandler = (formData: z.infer<typeof projectFormSchema>) => {
     setRequest({
       uId: uId,
-      method: 'POST',
+      method: 'PUT',
       accessToken: currentUser.accessToken,
       body: {
         type: "project",
