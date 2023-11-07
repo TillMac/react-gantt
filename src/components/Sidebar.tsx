@@ -3,39 +3,19 @@ import { faArrowRightFromBracket, faTableCellsLarge } from '@fortawesome/free-so
 import ProjectList from './ProjectList';
 import { Button } from './ui/button';
 import AddingProject from './AddingProject';
-import { MouseEvent, useEffect, useState } from 'react';
+import { Dispatch, MouseEvent, SetStateAction } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { NavLink } from 'react-router-dom';
-import useProjectListFetch from '@/hooks/useProjectListFetch';
+import { IProject } from '@/models/common';
 
-const Sidebar = () => {
-  const [reloadData, setReloadData] = useState<boolean>(false);
-  const { data, setRequest } = useProjectListFetch();
-  const { currentUser } = useAuth();
+type Props = {
+  data: IProject[] | null | undefined,
+  setActiveProject: Dispatch<SetStateAction<IProject>>
+  setReloadProjectListData: Dispatch<SetStateAction<boolean>>
+};
 
-  const handleFetchData = () => {
-    console.log('setRequest 前');
-    setRequest({
-      uId: currentUser.uid,
-      method: 'GET',
-      accessToken: currentUser.accessToken,
-    })
-    setReloadData(false);
-    console.log('setRequest 後');
-  }
-
-  useEffect(() => {
-    handleFetchData();
-  }, []);
-
-  useEffect(() => {
-    if (reloadData) {
-      console.log('重來哩', reloadData.toString())
-      handleFetchData();
-    }
-  }, [reloadData]);
-
-  const { logout } = useAuth();
+const Sidebar = ({ data, setActiveProject, setReloadProjectListData }: Props) => {
+  const { currentUser, logout } = useAuth();
   const logoutGoogle = async(e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     await logout();
@@ -60,9 +40,9 @@ const Sidebar = () => {
         }
         </NavLink>
       </section>
-      <ProjectList data={data} />
+      <ProjectList data={data!} setActiveProject={setActiveProject} />
       <section className='w-full px-4 py-2 mb-0 mt-auto flex items-center border-t-2 border-gray'>
-        <AddingProject uId={currentUser.uid} onProjectAdded={() => setReloadData(true)} />
+        <AddingProject uId={currentUser.uid} onProjectAdded={() => setReloadProjectListData(true)} />
         <Button className='m-0 hover:bg-gray hover:border-gray rounded-full ml-auto mr-0' onClick={logoutGoogle}>
           <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-text text-xl' />
         </Button>
