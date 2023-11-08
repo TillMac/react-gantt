@@ -121,7 +121,12 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button size="sm" className="px-3 rounded-lg border-gray" onClick={handleProjectUpdate}>
+                <Button
+                  size="sm"
+                  className="px-3 rounded-lg border-gray"
+                  onClick={handleProjectUpdate}
+                  disabled={(newProjectName === project!.name || newProjectName === '') ? true : false}
+                >
                   <span className="text-xl">Update</span>
                 </Button>
               </DialogClose>
