@@ -2,6 +2,7 @@ import ViewModeSelector from '@/components/ViewModeSelector';
 import ProjectSetting from '@/components/ProjectSetting';
 import { useActiveProject } from '@/layouts/AppLayout';
 import React, { useState } from 'react'
+import AddingTask from '@/components/AddingTask';
 
 const ProjectArea = () => {
   const [viewMode, setViewMode] = useState<number>(1);
@@ -14,6 +15,7 @@ const ProjectArea = () => {
         <ProjectSetting project={activeProject} setReloadProjectListData={setReloadProjectListData} />
       </section>
       <ViewModeSelector viewMode={viewMode} setViewMode={setViewMode} />
+      <AddingTask project={activeProject} />
     </>
   )
 }
