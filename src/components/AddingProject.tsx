@@ -41,6 +41,7 @@ const AddingProject = ({ uId, onProjectAdded }: Props) => {
         type: "project",
         name: formData.projectName,
         id: uuidv4(),
+        isStar: false,
         description: 'none',
         createTime: new Date(),
         updateTime: new Date(),
