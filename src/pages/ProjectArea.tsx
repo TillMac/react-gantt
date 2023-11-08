@@ -7,6 +7,7 @@ import AddingTask from '@/components/AddingTask';
 import useProjectFetch from '@/hooks/useProjectFetch';
 import { useAuth } from '@/context/AuthContext';
 import GanttChart from '@/components/GanttChart';
+import LazyMe from '@/components/LazyMe';
 
 const ProjectArea = () => {
   const [viewMode, setViewMode] = useState<number>(1);
@@ -46,6 +47,13 @@ const ProjectArea = () => {
       </section>
       <ViewModeSelector viewMode={viewMode} setViewMode={setViewMode} />
       <AddingTask project={activeProject} />
+      {
+        (viewMode === 1) ? (
+          <GanttChart taskData={data} />
+        ) : (
+          <LazyMe />
+        )
+      }
     </>
   )
 }
