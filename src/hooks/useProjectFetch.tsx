@@ -56,7 +56,22 @@ const useProjectFetch = (initialUId: UId = null, initialProjectId: ProjectId = n
           setData(null);
         }
         const tasksArray: ITask[] = Object.values(responseData);
-        setData(tasksArray);
+        const transformedTasksArray = tasksArray.map((task: ITask) => {
+          const startDate: Date = new Date(task.start);
+          const endDate: Date = new Date(task.end);
+          return ({
+          ...task,
+          start: startDate,
+          end: endDate,
+        })});
+        const orderedTasksArray: ITask[] = transformedTasksArray.sort((a, b) => {
+          const startDateA = a.start.getTime();
+          const startDateB = b.start.getTime();
+          return startDateA - startDateB;
+        })
+
+        console.log('tasksArray', orderedTasksArray);
+        setData(orderedTasksArray);
       } catch (error) {
         setError(error);
       } finally {
