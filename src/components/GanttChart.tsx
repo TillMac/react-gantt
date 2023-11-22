@@ -4,14 +4,14 @@ import useProjectFetch from '@/hooks/useProjectFetch';
 import { ITask } from '@/models/common';
 import { Gantt, Task } from 'gantt-task-react';
 import "gantt-task-react/dist/index.css";
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 type Props = {
   taskData: ITask[] | null,
   setReloadProjectData: Dispatch<SetStateAction<boolean>>,
 }
 
-const GanttChart = ({ taskData, setReloadProjectData }: Props) => {
+const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
   const [isMatchXl, setIsMatchXl] = useState<boolean>(window.matchMedia('(min-width: 1440px)').matches);
   const { currentUser } = useAuth();
   const { setRequest } = useProjectFetch();

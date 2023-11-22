@@ -17,7 +17,7 @@ import useProjectFetch from '@/hooks/useProjectFetch'
 import { useAuth } from '@/context/AuthContext'
 import { v4 as uuidv4 } from 'uuid';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
-import { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { DialogClose } from '@radix-ui/react-dialog'
 
 const taskLabel: Record<string, string> = {
@@ -56,7 +56,7 @@ type Props = {
   setReloadProjectData: Dispatch<SetStateAction<boolean>>,
 }
 
-const AddingTask = ({ project, setReloadProjectData }: Props) => {
+const AddingTask: React.FC<Props> = ({ project, setReloadProjectData }) => {
   const { setRequest } = useProjectFetch();
   const { currentUser } = useAuth();
 
