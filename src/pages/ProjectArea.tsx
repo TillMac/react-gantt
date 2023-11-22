@@ -1,8 +1,7 @@
 import ViewModeSelector from '@/components/ViewModeSelector';
 import ProjectSetting from '@/components/ProjectSetting';
 import { useActiveProject } from '@/layouts/AppLayout';
-import React, { useState } from 'react'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import AddingTask from '@/components/AddingTask';
 import useProjectFetch from '@/hooks/useProjectFetch';
 import { useAuth } from '@/context/AuthContext';
@@ -13,7 +12,7 @@ const ProjectArea = () => {
   const [viewMode, setViewMode] = useState<number>(1);
   const { activeProject, setReloadProjectListData } = useActiveProject();
   const [reloadProjectData, setReloadProjectData] = useState<boolean>(false);
-  const { data, setRequest } = useProjectFetch();
+  const { data, isLoading, setRequest } = useProjectFetch();
   const { currentUser } = useAuth();
 
   const getProjectData = () => {
@@ -31,6 +30,8 @@ const ProjectArea = () => {
   useEffect(() => {
     getProjectData();
   }, []);
+  
+  useEffect(() => console.log('data', data), [data])
 
   useEffect(() => {
     if (reloadProjectData) {
@@ -46,13 +47,12 @@ const ProjectArea = () => {
         <ProjectSetting project={activeProject} setReloadProjectListData={setReloadProjectListData} />
       </section>
       <ViewModeSelector viewMode={viewMode} setViewMode={setViewMode} />
-      <AddingTask project={activeProject} />
+      <AddingTask project={activeProject} setReloadProjectData={setReloadProjectData} />
       {
-        (viewMode === 1) ? (
-          <GanttChart taskData={data} />
-        ) : (
+        (viewMode === 1) ? 
+          ((!isLoading && data !== null) ? <GanttChart taskData={data} setReloadProjectData={setReloadProjectData} /> : <pre>Loading...</pre>) 
+        : 
           <LazyMe />
-        )
       }
     </>
   )
