@@ -152,6 +152,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectData }) => {
                                       selected={field.value}
                                       onSelect={field.onChange}
                                       initialFocus
+                                      className='pointer-events-auto'
                                     />
                                   </PopoverContent>
                                 </Popover>
