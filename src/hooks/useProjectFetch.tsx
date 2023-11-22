@@ -10,13 +10,13 @@ type RequestSchema = {
   method: HttpMethod,
   taskId?: string,
   accessToken?: string | null,
-  body?: ITask,
+  body?: ITask | null,
 };
 
 type UId = null | string;
 type AccessToken = null | string;
 
-const useProjectFetch = (initialUId: UId = null, initialProjectId: ProjectId = null, initialMethod: HttpMethod = 'GET', initialAccessToken: AccessToken = '', initialBody: ITask = null) => {
+const useProjectFetch = (initialUId: UId = null, initialProjectId: ProjectId = null, initialMethod: HttpMethod = 'GET', initialAccessToken: AccessToken = '', initialBody = null) => {
   // 狀態管理
   const [data, setData] = useState<ITask[] | null>(null);
   const [error, setError] = useState<unknown>(null);
@@ -26,7 +26,7 @@ const useProjectFetch = (initialUId: UId = null, initialProjectId: ProjectId = n
   const [projectId, setProjectId] = useState<ProjectId>(initialProjectId);
   const [taskId, setTaskId] = useState<TaskId>(null)
   const [method, setMethod] = useState<HttpMethod>(initialMethod);
-  const [body, setBody] = useState<ITask>(initialBody);
+  const [body, setBody] = useState<ITask | null>(initialBody);
   const [requestcount, setRequestCount] = useState<number>(0);
 
   const fetchProjectData = useCallback(
