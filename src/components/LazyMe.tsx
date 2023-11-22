@@ -1,4 +1,3 @@
-import React from 'react';
 import sorryCat from '@/assets/sorryCat.jpeg';
 
 const LazyMe = () => {

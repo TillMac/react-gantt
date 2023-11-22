@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import React, { ReactNode } from 'react'
 import { faPenToSquare, faStar as farStar, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { IProject } from '@/models/common';
