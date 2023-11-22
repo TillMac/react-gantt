@@ -38,9 +38,9 @@ function AppLayout() {
   return (
     <div className='w-screen flex'>
       <Sidebar data={data} setActiveProject={setActiveProject} setReloadProjectListData={setReloadProjectListData} />
-      <div className='w-full h-screen p-10'>
+      <main className='w-full h-screen p-10'>
         <Outlet context={{ activeProject, setReloadProjectListData }} />
-      </div>
+      </main>
     </div>
   )
 }
