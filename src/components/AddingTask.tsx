@@ -108,7 +108,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectData }) => {
   };
 
   return (
-    <Dialog className='bg-white text-theme rounded-lg' modal={true}>
+    <Dialog modal={true}>
         <DialogTrigger asChild>
           <Button className="w-16 h-16 bg-gray-500 rounded-full absolute bottom-10 right-10 border-transparent hover:bg-theme">
             <FontAwesomeIcon icon={faPlus} className="text-2xl my-4 text-white" />
