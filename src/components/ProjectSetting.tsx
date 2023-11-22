@@ -125,7 +125,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
                   size="sm"
                   className="px-3 rounded-lg border-gray"
                   onClick={handleProjectUpdate}
-                  disabled={(newProjectName === project!.name || newProjectName === '') ? true : false}
+                  disabled={(newProjectName === newProjectName || newProjectName === '') ? true : false}
                 >
                   <span className="text-xl">Update</span>
                 </Button>
