@@ -18,26 +18,27 @@ import { useAuth } from '@/context/AuthContext'
 import { v4 as uuidv4 } from 'uuid';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
 import { Dispatch, SetStateAction } from 'react'
+import { DialogClose } from '@radix-ui/react-dialog'
 
 const taskLabel: Record<string, string> = {
   taskName: 'Task Name',
-  startDate: 'Start Date',
-  dueDate: 'Due Date',
+  start: 'Start Date',
+  end: 'Due Date',
   type: 'Type',
   progress: 'Progress (%)',
 };
 
 type taskFormInputNameType = "taskName";
-type taskFormDateNameType = "startDate" | "dueDate";
+type taskFormDateNameType = "start" | "end";
 
 const taskFormSchema = z.object({
   taskName: z.string().min(1, {
     message: 'Task name must be at least 1 character, and lower than 20 characters.',
   }).max(20),
-  startDate: z.date({
+  start: z.date({
     required_error: "A date of start date is required.",
   }),
-  dueDate: z.date({
+  end: z.date({
     required_error: "A date of due date is required.",
   }),
   type: z.union([z.literal('task', {
@@ -63,8 +64,8 @@ const AddingTask = ({ project, setReloadProjectData }: Props) => {
     resolver: zodResolver(taskFormSchema),
     defaultValues: {
       taskName: '',
-      startDate: undefined,
-      dueDate: undefined,
+      start: undefined,
+      end: undefined,
       type: undefined,
       progress: 0,
     }
@@ -75,8 +76,8 @@ const AddingTask = ({ project, setReloadProjectData }: Props) => {
     console.log('print test', {
       name: taskFormData.taskName,
       id: taskId,
-      startDate: taskFormData.startDate,
-      dueDate: taskFormData.dueDate,
+      start: taskFormData.start,
+      end: taskFormData.end,
       description: 'none',
       projectId: project!.id,
       progress: Number(taskFormData.progress),
@@ -93,10 +94,10 @@ const AddingTask = ({ project, setReloadProjectData }: Props) => {
       body: {
         name: taskFormData.taskName,
         id: taskId,
-        startDate: taskFormData.startDate,
-        dueDate: taskFormData.dueDate,
+        start: taskFormData.start,
+        end: taskFormData.end,
         description: 'none',
-        projectId: project!.id,
+        project: project!.id,
         progress: Number(taskFormData.progress),
         type: taskFormData.type,
         createTime: new Date(),
@@ -107,7 +108,7 @@ const AddingTask = ({ project, setReloadProjectData }: Props) => {
   };
 
   return (
-    <Dialog className='bg-white text-theme rounded-lg'>
+    <Dialog className='bg-white text-theme rounded-lg' modal={true}>
         <DialogTrigger asChild>
           <Button className="w-16 h-16 bg-gray-500 rounded-full absolute bottom-10 right-10 border-transparent hover:bg-theme">
             <FontAwesomeIcon icon={faPlus} className="text-2xl my-4 text-white" />
@@ -121,7 +122,7 @@ const AddingTask = ({ project, setReloadProjectData }: Props) => {
               <form onSubmit={taskForm.handleSubmit(taskSubmitHandler)} className="flex flex-col gap-8">
                 {
                   Object.keys(taskLabel).map((label: string, idx: number) => {
-                    if (label.includes('Date')) {
+                    if (label.includes('start') || label.includes('end')) {
                       return (
                         <FormField
                           key={idx}
@@ -208,7 +209,9 @@ const AddingTask = ({ project, setReloadProjectData }: Props) => {
                     }
                   })
                 }
-                <Button type='submit' className='bg-gray-500 text-white rounded-xl col-span-4 hover:bg-theme border-transparent'>Submit</Button>
+                <DialogClose asChild>
+                  <Button type='submit' className='bg-gray-500 text-white rounded-xl col-span-4 hover:bg-theme border-transparent'>Submit</Button>
+                </DialogClose>
               </form>
             </Form>
         </DialogContent>
