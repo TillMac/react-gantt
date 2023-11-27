@@ -12,8 +12,8 @@ interface AlertDialogPortalProps extends AlertDialogPrimitive.AlertDialogPortalP
   className?: string;
 }
 
-const AlertDialogPortal: React.FC<AlertDialogPortalProps> = ({ className, ...props }) => (
-  <AlertDialogPrimitive.Portal className={cn(className)} {...props} />
+const AlertDialogPortal: React.FC<AlertDialogPortalProps> = ({ ...props }) => (
+  <AlertDialogPrimitive.Portal {...props} />
 );
 AlertDialogPortal.displayName = AlertDialogPrimitive.Portal.displayName;
 
@@ -37,7 +37,7 @@ const AlertDialogContent = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content>
 >(({ className, ...props }, ref) => (
-  <AlertDialogPortal>
+  <AlertDialogPortal className={className}>
     <AlertDialogOverlay />
     <AlertDialogPrimitive.Content
       ref={ref}

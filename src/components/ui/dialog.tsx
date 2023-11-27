@@ -12,8 +12,8 @@ interface DialogPortalProps extends DialogPrimitive.DialogPortalProps {
   className?: string;
 }
 
-const DialogPortal: React.FC<DialogPortalProps> = ({ className, ...props }) => (
-  <DialogPrimitive.Portal className={cn(className)} {...props} />
+const DialogPortal: React.FC<DialogPortalProps> = ({ ...props }) => (
+  <DialogPrimitive.Portal {...props} />
 );
 DialogPortal.displayName = DialogPrimitive.Portal.displayName;
 
