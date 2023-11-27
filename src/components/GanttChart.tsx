@@ -2,9 +2,10 @@
 import { useAuth } from '@/context/AuthContext';
 import useProjectFetch from '@/hooks/useProjectFetch';
 import { ITask } from '@/models/common';
-import { Gantt, Task } from 'gantt-task-react';
+import { Gantt, Task, ViewMode } from 'gantt-task-react';
 import "gantt-task-react/dist/index.css";
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import GanttViewSelector from './GanttViewSelector';
 
 type Props = {
   taskData: ITask[] | null,
@@ -13,8 +14,22 @@ type Props = {
 
 const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
   const [isMatchXl, setIsMatchXl] = useState<boolean>(window.matchMedia('(min-width: 1440px)').matches);
+  const [view, setView] = useState<ViewMode>(ViewMode.Day);
   const { currentUser } = useAuth();
   const { setRequest } = useProjectFetch();
+
+  let preStepsCount: number = 3;
+  let columnWidth: number = 55;
+  if (view === ViewMode.Year) {
+    columnWidth = 550;
+    preStepsCount = 0;
+  } else if (view === ViewMode.Month) {
+    columnWidth = 500;
+    preStepsCount = 0;
+  } else if (view === ViewMode.Week) {
+    columnWidth = 450;
+    preStepsCount = 0.5;
+  }
 
   useEffect(() => {
     window.matchMedia('(min-width: 1440px)').addEventListener('change', e => setIsMatchXl(e.matches));
@@ -95,12 +110,23 @@ const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
   return (
     <div style={{ maxWidth: (isMatchXl) ? '1492px' : '850px'}}>
       {(taskData === null) ? (<pre>No Data.</pre>) : (
-        <Gantt
-          tasks={taskData}
-          onDelete={handleTaskDelete}
-          onProgressChange={handleProgressChange}
-          onDateChange={handleTaskChange}
-        />
+        <>
+          <GanttViewSelector onViewModeChange={viewMode => setView(viewMode)} />
+          <Gantt
+            preStepsCount={preStepsCount}
+            viewMode={view}
+            tasks={taskData}
+            onDelete={handleTaskDelete}
+            onProgressChange={handleProgressChange}
+            onDateChange={handleTaskChange}
+            listCellWidth=''
+            columnWidth={columnWidth}
+            todayColor='#ff9e1f1a'
+            barProgressColor='#81B8EF'
+            barProgressSelectedColor='#1A76D2'
+            barCornerRadius={12}
+          />
+        </>
       )}
     </div>
   )
