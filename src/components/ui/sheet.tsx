@@ -15,8 +15,8 @@ interface SheetPortalProps extends SheetPrimitive.DialogPortalProps {
   className?: string;
 }
 
-const SheetPortal: React.FC<SheetPortalProps> = ({ className, ...props }) => (
-  <SheetPrimitive.Portal className={className} {...props} />
+const SheetPortal: React.FC<SheetPortalProps> = ({ ...props }) => (
+  <SheetPrimitive.Portal {...props} />
 );
 SheetPortal.displayName = SheetPrimitive.Portal.displayName;
 
