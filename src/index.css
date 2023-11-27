@@ -59,6 +59,16 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 } */
 
+
+/* gantt 後方文字 */
+:root ._3zRJQ {
+  mix-blend-mode: plus-lighter;
+}
+
+:root ._3KcaM {
+  mix-blend-mode: darken;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -116,13 +126,9 @@ button:focus-visible {
   :root ._KxSXS g rect:nth-child(even) {
     fill: #0d8abb !important;
   }
-}
 
-/* gantt 後方文字 */
-:root ._3zRJQ {
-  mix-blend-mode: plus-lighter;
-}
-
-:root ._3KcaM {
-  mix-blend-mode: darken;
+  :root ._3KcaM {
+    mix-blend-mode: unset;
+    fill: #fff;
+  }
 }
