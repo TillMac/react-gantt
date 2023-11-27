@@ -72,12 +72,49 @@ button:focus-visible {
   }
 }
 
-/* 偶數行背景色 */
+/* row 左側背景色 */
 ._3lLk3 {
-  background-color: #242424;
+  background-color: #fff;
+  color: #545454;
 }
 
-/* tooltip text */
+.dark ._3lLk3 {
+  background-color: #333333;
+  color: #cccccc;
+}
+
+/* tooltip */
 ._3T42e {
-  color: #6e6e6e;
+  background-color: #fff;
+}
+
+.dark ._3T42e {
+  background-color: #333333 !important;
+  color: #cccccc;
+}
+
+._29NTg {
+  color: #545454 !important;
+}
+
+.dark ._29NTg {
+  color: #cccccc !important;
+}
+
+/* row 右側甘特圖顏色 */
+.dark ._2dZTy {
+  fill: #a6a6a6 !important;
+}
+.dark ._2dZTy:nth-child(even) {
+  fill: #737373 !important;
+}
+
+/* progressbar 百分比顏色 */
+.dark ._KxSXS g rect:nth-child(even) {
+  fill: #0d8abb !important;
+}
+
+/* gantt 後方文字 */
+.dark ._3KcaM {
+  fill: #dadada !important;
 }

@@ -16,6 +16,19 @@ const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
   const { currentUser } = useAuth();
   const { setRequest } = useProjectFetch();
 
+  let preStepsCount: number = 3;
+  let columnWidth: number = 55;
+  if (view === ViewMode.Year) {
+    columnWidth = 550;
+    preStepsCount = 0;
+  } else if (view === ViewMode.Month) {
+    columnWidth = 500;
+    preStepsCount = 0;
+  } else if (view === ViewMode.Week) {
+    columnWidth = 450;
+    preStepsCount = 0.5;
+  }
+
   useEffect(() => {
     window.matchMedia('(min-width: 1440px)').addEventListener('change', e => setIsMatchXl(e.matches));
   }, []);
@@ -101,6 +114,19 @@ const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
           onProgressChange={handleProgressChange}
           onDateChange={handleTaskChange}
         />
+          <Gantt
+            preStepsCount={preStepsCount}
+            tasks={taskData}
+            onDelete={handleTaskDelete}
+            onProgressChange={handleProgressChange}
+            onDateChange={handleTaskChange}
+            listCellWidth=''
+            columnWidth={columnWidth}
+            todayColor='#ff9e1f1a'
+            barProgressColor='#81B8EF'
+            barProgressSelectedColor='#1A76D2'
+            barCornerRadius={12}
+          />
       )}
     </div>
   )
