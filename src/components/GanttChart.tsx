@@ -2,9 +2,10 @@
 import { useAuth } from '@/context/AuthContext';
 import useProjectFetch from '@/hooks/useProjectFetch';
 import { ITask } from '@/models/common';
-import { Gantt, Task } from 'gantt-task-react';
+import { Gantt, Task, ViewMode } from 'gantt-task-react';
 import "gantt-task-react/dist/index.css";
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import GanttViewSelector from './GanttViewSelector';
 
 type Props = {
   taskData: ITask[] | null,
@@ -13,6 +14,7 @@ type Props = {
 
 const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
   const [isMatchXl, setIsMatchXl] = useState<boolean>(window.matchMedia('(min-width: 1440px)').matches);
+  const [view, setView] = useState<ViewMode>(ViewMode.Day);
   const { currentUser } = useAuth();
   const { setRequest } = useProjectFetch();
 
@@ -108,14 +110,11 @@ const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
   return (
     <div style={{ maxWidth: (isMatchXl) ? '1492px' : '850px'}}>
       {(taskData === null) ? (<pre>No Data.</pre>) : (
-        <Gantt
-          tasks={taskData}
-          onDelete={handleTaskDelete}
-          onProgressChange={handleProgressChange}
-          onDateChange={handleTaskChange}
-        />
+        <>
+          <GanttViewSelector onViewModeChange={viewMode => setView(viewMode)} />
           <Gantt
             preStepsCount={preStepsCount}
+            viewMode={view}
             tasks={taskData}
             onDelete={handleTaskDelete}
             onProgressChange={handleProgressChange}
@@ -127,6 +126,7 @@ const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
             barProgressSelectedColor='#1A76D2'
             barCornerRadius={12}
           />
+        </>
       )}
     </div>
   )
