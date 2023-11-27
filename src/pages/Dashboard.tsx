@@ -1,8 +1,8 @@
-import React from 'react'
+import LazyMe from '@/components/LazyMe';
 
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <LazyMe />
   )
 }
 

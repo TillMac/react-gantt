@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import React, { ReactNode } from 'react'
 import { faPenToSquare, faStar as farStar, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
 import { IProject } from '@/models/common';
@@ -121,7 +120,12 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
             </div>
             <DialogFooter>
               <DialogClose asChild>
-                <Button size="sm" className="px-3 rounded-lg border-gray" onClick={handleProjectUpdate}>
+                <Button
+                  size="sm"
+                  className="px-3 rounded-lg border-gray"
+                  onClick={handleProjectUpdate}
+                  disabled={(newProjectName === newProjectName || newProjectName === '') ? true : false}
+                >
                   <span className="text-xl">Update</span>
                 </Button>
               </DialogClose>

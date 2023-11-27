@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+// import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfigSchema = z.object({
@@ -29,7 +29,7 @@ const firebaseConfig: IFirebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const analytics = getAnalytics(app);
+// const analytics = getAnalytics(app);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const auth = getAuth(app);
 

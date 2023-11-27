@@ -41,6 +41,7 @@ const AddingProject = ({ uId, onProjectAdded }: Props) => {
         type: "project",
         name: formData.projectName,
         id: uuidv4(),
+        isStar: false,
         description: 'none',
         createTime: new Date(),
         updateTime: new Date(),
@@ -50,7 +51,7 @@ const AddingProject = ({ uId, onProjectAdded }: Props) => {
   }
 
   return (
-    <Dialog className='bg-white text-theme rounded-lg'>
+    <Dialog>
         <DialogTrigger asChild>
           <Button className='m-0 px-3 py-1 justify-start hover:bg-gray hover:border-gray rounded-xl'>
             <FontAwesomeIcon icon={faFolderPlus} className='text-text text-xl' />

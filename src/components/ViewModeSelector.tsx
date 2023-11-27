@@ -29,9 +29,9 @@ const ViewModeSelector = ({ viewMode = 1, setViewMode }: Props) => {
           )
         }
         return (
-          <Button key={mode} className='flex px-2 gap-2 rounded-xl bg-text text-gray hover:border-gray hover:bg-gray'>
-            <FontAwesomeIcon icon={viewModeIcons[mode]} className='order-first text-lg text-white' />
-            <h3 className='text-xl order-last text-white'>{mode}</h3>
+          <Button key={mode} className='flex px-2 gap-2 rounded-xl bg-theme text-white hover:bg-theme hover:border-none'>
+            <FontAwesomeIcon icon={viewModeIcons[mode]} className='order-first text-lg' />
+            <h3 className='text-xl order-last'>{mode}</h3>
           </Button>
         )
       })

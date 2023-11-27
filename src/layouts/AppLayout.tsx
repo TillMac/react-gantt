@@ -1,6 +1,5 @@
 import { Outlet, useOutletContext } from 'react-router-dom'
 import './AppLayout.css'
-import AddingTask from '../components/AddingTask'
 import Sidebar from '../components/Sidebar'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { IProject } from '@/models/common'
@@ -39,10 +38,9 @@ function AppLayout() {
   return (
     <div className='w-screen flex'>
       <Sidebar data={data} setActiveProject={setActiveProject} setReloadProjectListData={setReloadProjectListData} />
-      <div className='w-full h-screen p-10'>
+      <main className='w-full h-screen p-10'>
         <Outlet context={{ activeProject, setReloadProjectListData }} />
-      </div>
-      <AddingTask />
+      </main>
     </div>
   )
 }
