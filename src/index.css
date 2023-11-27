@@ -131,7 +131,7 @@ button:focus-visible {
     mix-blend-mode: unset;
     fill: #fff;
   }
-
+  
   ._2k9Ys::-webkit-scrollbar-thumb {
     background: darkgray !important;
   }
