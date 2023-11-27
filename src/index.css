@@ -70,51 +70,59 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+
+  /* row 左側背景色 */
+  ._3lLk3 {
+    background-color: #fff;
+    color: #545454;
+  }
+
+  /* tooltip */
+  ._3T42e {
+    background-color: #fff;
+  }
+
+  ._29NTg {
+    color: #545454 !important;
+  }
 }
 
-/* row 左側背景色 */
-._3lLk3 {
-  background-color: #fff;
-  color: #545454;
-}
+@media (prefers-color-scheme: dark) {
+  /* row 右側甘特圖顏色 */
+  :root ._2dZTy {
+    fill: #a6a6a6 !important;
+  }
+  :root ._2dZTy:nth-child(even) {
+    fill: #737373 !important;
+  }
 
-.dark ._3lLk3 {
-  background-color: #333333;
-  color: #cccccc;
-}
+  /* row 左側背景色 */
+  :root ._3lLk3 {
+    background-color: #333333;
+    color: #cccccc;
+  }
 
-/* tooltip */
-._3T42e {
-  background-color: #fff;
-}
+  /* tooltip */
+  :root ._3T42e {
+    background-color: #333333 !important;
+    color: #cccccc;
+  }
 
-.dark ._3T42e {
-  background-color: #333333 !important;
-  color: #cccccc;
-}
+  :root ._29NTg {
+    color: #cccccc !important;
+  }
 
-._29NTg {
-  color: #545454 !important;
-}
-
-.dark ._29NTg {
-  color: #cccccc !important;
-}
-
-/* row 右側甘特圖顏色 */
-.dark ._2dZTy {
-  fill: #a6a6a6 !important;
-}
-.dark ._2dZTy:nth-child(even) {
-  fill: #737373 !important;
-}
-
-/* progressbar 百分比顏色 */
-.dark ._KxSXS g rect:nth-child(even) {
-  fill: #0d8abb !important;
+  /* progressbar 百分比顏色 */
+  :root ._KxSXS g rect:nth-child(even) {
+    fill: #0d8abb !important;
+  }
 }
 
 /* gantt 後方文字 */
-.dark ._3KcaM {
-  fill: #dadada !important;
+:root ._3zRJQ {
+  mix-blend-mode: plus-lighter;
+}
+
+:root ._3KcaM {
+  mix-blend-mode: darken;
 }
