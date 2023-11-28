@@ -8,6 +8,7 @@ import { useAuth } from '@/context/AuthContext';
 import GanttChart from '@/components/GanttChart';
 import LazyMe from '@/components/LazyMe';
 import { useLocation } from 'react-router-dom';
+import TableList from '@/components/TableList';
 
 const ProjectArea = () => {
   const [viewMode, setViewMode] = useState<number>(1);
@@ -49,12 +50,13 @@ const ProjectArea = () => {
       </section>
       <ViewModeSelector viewMode={viewMode} setViewMode={setViewMode} />
       <AddingTask project={activeProject} setReloadProjectData={setReloadProjectData} />
-      {
-        (viewMode === 1) ? 
-          ((!isLoading && data !== null) ? <GanttChart taskData={data} setReloadProjectData={setReloadProjectData} /> : <pre>Loading...</pre>) 
-        : 
-          <LazyMe />
-      }
+        {
+          viewMode === 1 ? 
+            (!isLoading && data !== null) ? <GanttChart taskData={data} setReloadProjectData={setReloadProjectData} /> : <pre>Loading...</pre> 
+          : viewMode === 0 ?
+            (!isLoading && data !== null) ? <TableList taskData={data} setReloadProjectData={setReloadProjectData} /> : <pre>Loading...</pre>
+          : <LazyMe />
+        }
     </>
   )
 }
