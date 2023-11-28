@@ -15,21 +15,6 @@
  
     --primary: 220.9 39.3% 11%;
     --primary-foreground: 210 20% 98%;
-
-    --theme: 210 77% 46%;
-    --theme-foreground: 0 0% 100%;
-
-    --gray: 0 0% 75%;
-    --gray-foreground: 0 0% 20%;
-
-    --text: 0 0% 33%;
-    --text-foreground: 0 0% 80%;
-
-    --drop-bg: 0 0% 98%;
-    --drop-bg-foreground: 224 71.4% 4.1%;
-
-    --drop-text: 0 0% 33%;
-    --drop-text-foreground: 0, 0%, 80%;
  
     --secondary: 220 14.3% 95.9%;
     --secondary-foreground: 220.9 39.3% 11%;
@@ -63,21 +48,6 @@
     --primary: 210 20% 98%;
     --primary-foreground: 220.9 39.3% 11%;
  
-    --theme: 210 77% 46%;
-    --theme-foreground: 210 20% 98%;
-
-    --gray: 0 0% 45%;
-    --gray-foreground: 0 0% 65%;
-
-    --text: 0 0% 95%;
-    --text-foreground: 0 0% 70%;
-
-    --drop-bg: 210 20% 98%;
-    --drop-bg-foreground: 210 20% 98%;
-
-    --drop-text: 210 20% 98%;
-    --drop-text-foreground: 210 20% 98%;
-
     --secondary: 215 27.9% 16.9%;
     --secondary-foreground: 210 20% 98%;
  
