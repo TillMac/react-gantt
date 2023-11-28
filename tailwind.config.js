@@ -13,7 +13,8 @@ module.exports = {
 			center: true,
 			padding: '2rem',
 			screens: {
-				'2xl': '1400px',
+				lg: '1200px',
+				xl: '1440px',
 			},
 		},
 		extend: {
@@ -50,6 +51,26 @@ module.exports = {
 				card: {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))',
+				},
+				theme: {
+					DEFAULT: '#1A76D2',
+					foreground: 'hsl(var(--theme-foreground))',
+				},
+				gray: {
+					DEFAULT: '#C0C0C0',
+					secondary: 'hsl(var(--gray-foreground))',
+				},
+				text: {
+					DEFAULT: '#545454',
+					secondary: 'hsl(var(--text-goreground))',
+				},
+				dropBg: {
+					DEFAULT: 'hsl(var(--drop-bg))',
+					secondary: 'hsl(var(--drop-bg-foreground))',
+				},
+				dropText: {
+					DEFAULT: 'var(--drop-text)',
+					secondary: 'hsl(var(--drop-text-foreground))',
 				},
 			},
 			borderRadius: {

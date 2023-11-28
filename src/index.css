@@ -54,9 +54,39 @@ button {
 button:hover {
   border-color: #646cff;
 }
-button:focus,
+/* button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+} */
+
+/* TableList 最後一行左右兩側圓角 */
+tbody tr:last-child > td:first-child, 
+tbody tr:last-child > th:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+tbody tr:last-child > td:last-child, 
+tbody tr:last-child > th:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+/* table header */
+:root thead > tr > th {
+  background-color: #f5f5f5;
+}
+
+/* TableList MaxHeight */
+.table_maxHeight {
+  max-height: 80vh;
+}
+
+/* gantt 後方文字 */
+:root ._3zRJQ {
+  mix-blend-mode: plus-lighter;
+}
+
+:root ._3KcaM {
+  mix-blend-mode: darken;
 }
 
 @media (prefers-color-scheme: light) {
@@ -69,5 +99,77 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+
+  /* row 左側背景色 */
+  ._3lLk3 {
+    background-color: #fff;
+    color: #545454;
+  }
+
+  /* tooltip */
+  ._3T42e {
+    background-color: #fff;
+  }
+
+  ._29NTg {
+    color: #545454 !important;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  /* row 右側甘特圖顏色 */
+  :root ._2dZTy {
+    fill: #a6a6a6 !important;
+  }
+  :root ._2dZTy:nth-child(even) {
+    fill: #737373 !important;
+  }
+
+  /* row 左側背景色 */
+  :root ._3lLk3 {
+    background-color: #333333;
+    color: #cccccc;
+  }
+
+  /* tooltip */
+  :root ._3T42e {
+    background-color: #333333 !important;
+    color: #cccccc;
+  }
+
+  :root ._29NTg {
+    color: #cccccc !important;
+  }
+
+  /* progressbar 百分比顏色 */
+  :root ._KxSXS g rect:nth-child(even) {
+    fill: #0d8abb !important;
+  }
+
+  :root ._3KcaM {
+    mix-blend-mode: unset;
+    fill: #fff;
+  }
+  
+  ._2k9Ys::-webkit-scrollbar-thumb {
+    background: darkgray !important;
+  }
+
+  ._2k9Ys::-webkit-scrollbar {
+    height: 0.6rem !important;
+  }
+
+  /* table header */
+  :root thead > tr > th {
+    background-color: #666666;
+  }
+  :root tbody > tr > td {
+    background-color: #808080;
+  }
+
+  /* TableList 最後一行左右兩側圓角 */
+  :root tbody tr td {
+    border: 1px solid #D1D5DB;
   }
 }
