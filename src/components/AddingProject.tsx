@@ -51,9 +51,10 @@ const AddingProject = ({ uId, onProjectAdded }: Props) => {
   }
 
   return (
-    <Dialog>
+    <div className='w-5/6 pb-4'>
+      <Dialog>
         <DialogTrigger asChild>
-          <Button className='m-0 px-3 py-1 justify-start hover:bg-gray hover:border-gray rounded-xl'>
+          <Button className='w-full m-0 px-3 py-1 justify-start hover:bg-gray hover:border-gray rounded-xl'>
             <FontAwesomeIcon icon={faFolderPlus} className='text-text text-xl' />
             <h4 className='text-xl pl-4 text-text font-mono'>New Project</h4>
           </Button>
@@ -83,6 +84,7 @@ const AddingProject = ({ uId, onProjectAdded }: Props) => {
           </Form>
         </DialogContent>
       </Dialog>
+    </div>
   )
 }
 

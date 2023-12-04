@@ -1,7 +1,7 @@
 import loginImage from '@/assets/logo.png';
 import loginPageBg from '@/assets/loginBg.jpg';
 import { Button } from '@/components/ui/button';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithPopup, GoogleAuthProvider, signInAnonymously } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { auth } from '@/firebase';
@@ -15,6 +15,17 @@ const LoginPage = () => {
   googleAuthProvider.addScope('https://www.googleapis.com/auth/firebase.database');
   const loginGoogle = () => {
     signInWithPopup(auth, googleAuthProvider)
+      .then((codeResponse) => {
+        console.log('codeResponse', codeResponse);
+        if (currentUser) {
+          navigate('/dashboard');
+        }
+      })
+      .catch((error) => console.log('error!', error.code));
+  };
+
+  const loginAnonymously = () => {
+    signInAnonymously(auth)
       .then((codeResponse) => {
         console.log('codeResponse', codeResponse);
         if (currentUser) {
@@ -38,7 +49,10 @@ const LoginPage = () => {
         <h2 className='inline font-mono text-4xl mt-auto mb-0'>Ticket.<span className='text-theme'>Gantt</span></h2>
       </section>
       <h3 className='text-6xl mix-blend-difference'>Start Your Personal Project Management from NOW.</h3>
-      <Button className='w-1/8 mx-auto bg-theme rounded-xl text-white hover:bg-white hover:text-theme' onClick={() => loginGoogle()}>Sign in with Google</Button>
+      <div className='flex flex-col gap-8'>
+        <Button className='w-44 mx-auto bg-theme rounded-xl text-white hover:bg-white hover:text-theme' onClick={() => loginGoogle()}>Sign in with Google</Button>
+        <Button className='w-44 mx-auto bg-transparent border-text border-2 rounded-xl text-white hover:bg-gray hover:border-text' onClick={() => loginAnonymously()}>Guest Login</Button>
+      </div>
     </div>
   )
 }
