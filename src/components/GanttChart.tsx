@@ -96,7 +96,6 @@ const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
       body: {
         name: task.name,
         id: task.id,
-        status: task.status,
         start: task.start,
         end: task.end,
         description: 'none',
