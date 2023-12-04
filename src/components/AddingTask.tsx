@@ -22,6 +22,7 @@ import { DialogClose } from '@radix-ui/react-dialog'
 
 const taskLabel: Record<string, string> = {
   taskName: 'Task Name',
+  status: 'Status',
   start: 'Start Date',
   end: 'Due Date',
   type: 'Type',
@@ -35,6 +36,7 @@ const taskFormSchema = z.object({
   taskName: z.string().min(1, {
     message: 'Task name must be at least 1 character, and lower than 20 characters.',
   }).max(20),
+  status: z.union([z.literal('TODO'), z.literal('IN PROGRESS'), z.literal('DONE'), z.literal('WAIVED')]),
   start: z.date({
     required_error: "A date of start date is required.",
   }),
@@ -64,6 +66,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectData }) => {
     resolver: zodResolver(taskFormSchema),
     defaultValues: {
       taskName: '',
+      status: 'TODO',
       start: undefined,
       end: undefined,
       type: undefined,
@@ -73,18 +76,6 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectData }) => {
 
   const taskSubmitHandler = (taskFormData: z.infer<typeof taskFormSchema>) => {
     const taskId = uuidv4();
-    console.log('print test', {
-      name: taskFormData.taskName,
-      id: taskId,
-      start: taskFormData.start,
-      end: taskFormData.end,
-      description: 'none',
-      projectId: project!.id,
-      progress: Number(taskFormData.progress),
-      type: taskFormData.type,
-      createTime: new Date(),
-      updateTime: new Date(),
-    })
     setRequest({
       uId: currentUser.uid,
       projectId: project!.id,
@@ -94,6 +85,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectData }) => {
       body: {
         name: taskFormData.taskName,
         id: taskId,
+        status: taskFormData.status,
         start: taskFormData.start,
         end: taskFormData.end,
         description: 'none',
@@ -173,7 +165,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectData }) => {
                             <FormItem className='grid grid-cols-4 items-center'>
                               <FormLabel className='text-left' key={idx}>{taskLabel[label]}</FormLabel>
                                 {
-                                  (taskLabel[label] !== 'Type') ? (
+                                  (taskLabel[label] !== 'Type' && taskLabel[label] !== 'Status') ? (
                                     <FormControl>
                                       <Input
                                         key={idx}
@@ -188,19 +180,34 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectData }) => {
                                         }}
                                       />
                                     </FormControl>
-                                  ) : (
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                      <FormControl className='col-span-3 rounded-xl'>
-                                        <SelectTrigger>
-                                          <SelectValue placeholder='Select a type for ur event' />
-                                        </SelectTrigger>
-                                      </FormControl>
-                                      <SelectContent className='bg-gray'>
-                                        <SelectItem className='cursor-pointer' value="task">Task</SelectItem>
-                                        <SelectItem className='cursor-pointer' value="milestone">Milestone</SelectItem>
-                                      </SelectContent>
-                                    </Select>
-                                  )
+                                  ) : 
+                                    (taskLabel[label] !== 'Status') ? (
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                          <FormControl className='col-span-3 rounded-xl'>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder='Select a type for ur event' />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent className='bg-gray'>
+                                            <SelectItem className='cursor-pointer' value="task">Task</SelectItem>
+                                            <SelectItem className='cursor-pointer' value="milestone">Milestone</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      ) : (
+                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                          <FormControl className='col-span-3 rounded-xl'>
+                                            <SelectTrigger>
+                                              <SelectValue placeholder='Select a status for ur event' />
+                                            </SelectTrigger>
+                                          </FormControl>
+                                          <SelectContent className='bg-gray'>
+                                            <SelectItem className='cursor-pointer' value="TODO">Todo</SelectItem>
+                                            <SelectItem className='cursor-pointer' value="IN PROGRESS">In Progress</SelectItem>
+                                            <SelectItem className='cursor-pointer' value="DONE">Done</SelectItem>
+                                            <SelectItem className='cursor-pointer' value="WAIVED">Waived</SelectItem>
+                                          </SelectContent>
+                                        </Select>
+                                      )
                                 }
                               <FormMessage className='col-span-4 text-red-500' />
                             </FormItem>
