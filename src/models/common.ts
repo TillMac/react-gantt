@@ -15,6 +15,7 @@ type IProject = z.infer<typeof IProjectSchema>;
 const ITaskSchema = z.object({
   name: z.string(),
   id: z.string().uuid(),
+  status: z.union([z.literal('TODO'), z.literal('IN PROGRESS'), z.literal('DONE'), z.literal('WAIVED')]),
   start: z.date(),
   end: z.date(),
   description: z.string(),

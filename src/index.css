@@ -115,6 +115,16 @@ tbody tr:last-child > th:last-child {
   ._29NTg {
     color: #545454 !important;
   }
+
+  /* Kanban Col */
+  :root .kanban__col {
+    background-color: whitesmoke;
+  }
+
+  /* Kanban Card */
+  :root .kanban__card {
+    background-color: #f5f5f5;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -171,5 +181,40 @@ tbody tr:last-child > th:last-child {
   /* TableList 最後一行左右兩側圓角 */
   :root tbody tr td {
     border: 1px solid #D1D5DB;
+  }
+
+  /* Kanban Col */
+  :root .kanban__col {
+    background-color: #666666;
+  }
+
+  /* Kanban Card */
+  :root .kanban__card {
+    background-color: #808080;
+  }
+}
+
+/* Kanban Col */
+.kanban__col {
+  max-height: 75vh;
+  overflow-y: auto;
+  background-color: #666666;
+}
+
+/* Kanban Card */
+.kanban__card {
+  border-radius: 12px;
+  border-color: '#D1D5DB';
+  background-color: #808080;
+}
+
+@keyframes green-glow {
+  0%, 100% {
+    border-color: transparent;
+    box-shadow: none;
+  }
+  25%, 75% {
+    border-color: green;
+    box-shadow: 0 0 16px green;
   }
 }
