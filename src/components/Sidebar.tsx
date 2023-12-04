@@ -16,7 +16,7 @@ type Props = {
 };
 
 const Sidebar = ({ data, setActiveProject, setReloadProjectListData }: Props) => {
-  const { currentUser, isAnonymous, logout } = useAuth();
+  const { currentUser, isAnonymous, setIsAnonymous, logout } = useAuth();
   const navigate = useNavigate();
   const logoutGoogle = async(e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -29,6 +29,7 @@ const Sidebar = ({ data, setActiveProject, setReloadProjectListData }: Props) =>
         console.log('codeResponse', codeResponse);
         if (currentUser) {
           navigate('/dashboard');
+          setIsAnonymous(false);
         }
       })
       .catch((error) => {
