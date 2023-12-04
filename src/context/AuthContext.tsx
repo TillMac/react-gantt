@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
 import { auth } from "@/firebase";
 
 type Props = {
@@ -9,6 +9,7 @@ type AuthContextType = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   currentUser: any;
   isAnonymous: boolean;
+  setIsAnonymous: Dispatch<SetStateAction<boolean>>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   logout: any;
   // 你可以在此添加其他的函數或狀態型別，例如 login 或 logout 函數
@@ -58,6 +59,7 @@ const AuthProvider = ({children}: Props) => {
   const value = {
     currentUser,
     isAnonymous,
+    setIsAnonymous,
     logout,
   };
 
