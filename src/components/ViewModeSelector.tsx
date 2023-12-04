@@ -1,12 +1,13 @@
 import { viewModes } from "@/models/common";
 import { IconDefinition, faChartGantt, faTableColumns, faTableList } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { Button } from "./ui/button";
 
 type Props = {
   viewMode: number,
   setViewMode: Dispatch<SetStateAction<number>>,
+  setReloadProjectData: Dispatch<SetStateAction<boolean>>,
 }
 
 const viewModeIcons: Record<string, IconDefinition> = {
@@ -15,7 +16,11 @@ const viewModeIcons: Record<string, IconDefinition> = {
   kanban: faTableColumns,
 };
 
-const ViewModeSelector = ({ viewMode = 1, setViewMode }: Props) => {
+const ViewModeSelector = ({ viewMode = 1, setViewMode, setReloadProjectData }: Props) => {
+  useEffect(() => {
+    setReloadProjectData(true);
+  }, [viewMode]);
+  
   return (
     <section className='w-full flex py-4 gap-2'>
     {

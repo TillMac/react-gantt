@@ -6,9 +6,9 @@ import AddingTask from '@/components/AddingTask';
 import useProjectFetch from '@/hooks/useProjectFetch';
 import { useAuth } from '@/context/AuthContext';
 import GanttChart from '@/components/GanttChart';
-import LazyMe from '@/components/LazyMe';
 import { useLocation } from 'react-router-dom';
 import TableList from '@/components/TableList';
+import Kanban from '@/components/Kanban';
 
 const ProjectArea = () => {
   const [viewMode, setViewMode] = useState<number>(1);
@@ -48,14 +48,14 @@ const ProjectArea = () => {
         <h2 className='text-3xl'>{activeProject?.name}</h2>
         <ProjectSetting project={activeProject} setReloadProjectListData={setReloadProjectListData} />
       </section>
-      <ViewModeSelector viewMode={viewMode} setViewMode={setViewMode} />
+      <ViewModeSelector viewMode={viewMode} setViewMode={setViewMode} setReloadProjectData={setReloadProjectData} />
       <AddingTask project={activeProject} setReloadProjectData={setReloadProjectData} />
-        {
-          viewMode === 1 ? 
-            (!isLoading && data !== null) ? <GanttChart taskData={data} setReloadProjectData={setReloadProjectData} /> : <pre>Loading...</pre> 
-          : viewMode === 0 ?
-            (!isLoading && data !== null) ? <TableList taskData={data} setReloadProjectData={setReloadProjectData} /> : <pre>Loading...</pre>
-          : <LazyMe />
+        { !isLoading && data !== null ? (
+          viewMode === 1 ? <GanttChart taskData={data} setReloadProjectData={setReloadProjectData} /> : (
+            viewMode === 0 ? <TableList taskData={data} setReloadProjectData={setReloadProjectData} /> : (
+              <Kanban taskData={data} />
+            )
+          )): (!isLoading) ? <pre>No data.</pre> : <pre>Loading...</pre>
         }
     </>
   )
