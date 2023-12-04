@@ -39,7 +39,7 @@ const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
     if (taskData) {
       const newTasks: any = taskData.map(t => (t.id === task.id ? task : t));
       console.log('newTasks', newTasks);
-      const editedTask: Task = newTasks.find((newTask: Task) =>
+      const editedTask: ITask = newTasks.find((newTask: Task) =>
         taskData.some((oldTask: ITask) =>
           oldTask.id === newTask.id && 
           (oldTask.start.getTime() !== newTask.start.getTime() ||
