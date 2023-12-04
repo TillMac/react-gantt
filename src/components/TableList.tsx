@@ -37,9 +37,9 @@ const TableList = ({ taskData }: Props) => {
               {tableList.map((task: ITask) => (
                 <Row key={task.id} item={task}>
                   <Cell className="h-16 text-left !py-4 !pl-4 border-l-2 border-b-2 border-gray-300">{task.name}</Cell>
-                  <Cell className="h-16 text-left !pl-4  border-l-2 border-b-2 border-gray-300">{task.status}</Cell>
                   <Cell className="h-16 text-left !pl-4  border-l-2 border-b-2 border-gray-300">{dayjs(task.start).format('YYYY/MM/DD')}</Cell>
                   <Cell className="h-16 text-left !pl-4  border-l-2 border-b-2 border-gray-300">{dayjs(task.end).format('YYYY/MM/DD')}</Cell>
+                  <Cell className="h-16 text-left !pl-4  border-l-2 border-b-2 border-gray-300">{task.status}</Cell>
                   <Cell className="h-16 text-left !pl-4  border-l-2 border-r-2 border-b-2 border-gray-300">{`${task.progress}%`}</Cell>
                 </Row>
               ))}
