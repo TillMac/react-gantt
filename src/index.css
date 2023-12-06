@@ -89,6 +89,11 @@ tbody tr:last-child > th:last-child {
   mix-blend-mode: darken;
 }
 
+/* hero */
+:root .hero__bg {
+  background-color: whitesmoke;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -192,6 +197,21 @@ tbody tr:last-child > th:last-child {
   :root .kanban__card {
     background-color: #808080;
   }
+
+  /* login header */
+  :root .login__header {
+    mix-blend-mode: lighten;
+  }
+
+  /* hero */
+  :root .hero__bg {
+    background-color: #242424;
+  }
+
+  /* hero nav title */
+  :root .text-text {
+    color: white;
+  }
 }
 
 /* Kanban Col */
@@ -217,4 +237,60 @@ tbody tr:last-child > th:last-child {
     border-color: green;
     box-shadow: 0 0 16px green;
   }
+}
+
+  :root .hero__title {
+    font-size: 3em;
+    background: -webkit-linear-gradient(#0d8abb, #1A76D2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @keyframes fadeInEffect {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  :root movingCard {
+    border-radius: 12px;
+    /* Initial state */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: box-shadow 0.3s, transform 0.3s; /* Smooth transition for shadow and transform */
+  }
+  
+  :root .movingCard:hover {
+    /* Hover state */
+    box-shadow: 0 0 16px 0 #1A76D2;
+    transform: scale(1.05); /* Slightly enlarge the card */
+  }
+
+  .div-container > div {
+    /* 指定一個基本高度和寬度 */
+    height: 50px;
+    /* margin: 10px; */
+    /* 動畫設定 */
+    animation: slideIn 1.5s ease-out;
+}
+
+/* 隨機背景色 */
+.div-container > div:nth-child(even) {
+    background-color: #EDD4D6;
+}
+.div-container > div:nth-child(odd) {
+    background-color: #FF9E1F;
+}
+
+/* 定義動畫 */
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+        display: hidden;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+        display: block;
+    }
 }
