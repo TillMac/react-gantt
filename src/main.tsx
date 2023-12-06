@@ -11,6 +11,7 @@ import { AuthProvider, useAuth } from './context/AuthContext.tsx';
 import AppLayout from './layouts/AppLayout.tsx';
 import Dashboard from './pages/Dashboard.tsx';
 import ProjectArea from './pages/ProjectArea.tsx';
+import HeroPage from './pages/HeroPage.tsx';
 
 const PrivateRoutes = () => {
   const { currentUser } = useAuth();
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
     path: '/login',
     element: <LoginPage />,
   },
+  {
+    path: '/',
+    element: <HeroPage />
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
