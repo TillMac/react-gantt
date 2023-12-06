@@ -1,4 +1,4 @@
-import HeroNav from "@/components/heroPage/heroNav";
+import HeroNav from "@/components/heroPage/HeroNav";
 import { ReactNode } from "react";
 
 type HeroLayoutProps = {
