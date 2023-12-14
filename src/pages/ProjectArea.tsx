@@ -11,7 +11,6 @@ import { useLocation } from 'react-router-dom';
 import TableList from '@/components/TableList';
 import Kanban from '@/components/Kanban';
 import { ITask } from '@/models/common';
-import { Task } from 'gantt-task-react';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -33,7 +32,8 @@ const ProjectArea = () => {
   const [reloadProjectDataCount, setReloadProjectDataCount] = useState<number>(1);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
-  const [modalTask, setModalTask] = useState<ITask | Task | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [modalTask, setModalTask] = useState<ITask | any | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [defaultValues, setDefaultValues] = useState<any>(null);
   const { data, isLoading, setRequest } = useProjectFetch();
