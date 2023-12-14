@@ -94,6 +94,12 @@ tbody tr:last-child > th:last-child {
   background-color: whitesmoke;
 }
 
+/* sidebar logout */
+:root .sidebar__logout:hover {
+  background-color: #545454;
+  border-color: #545454;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

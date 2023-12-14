@@ -70,7 +70,7 @@ const Sidebar = ({ data, setActiveProject, setReloadProjectListData }: Props) =>
             </Button>
           )
         }
-        <Button className='m-0 hover:bg-gray hover:border-gray rounded-full ml-auto mr-0' onClick={logoutGoogle}>
+        <Button className='m-0 sidebar__logout rounded-full ml-auto mr-0' onClick={logoutGoogle}>
           <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-text text-xl' />
         </Button>
       </section>
