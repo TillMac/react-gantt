@@ -140,6 +140,11 @@ tbody tr:last-child > th:last-child {
   :root .dialog__background {
     background-color: whitesmoke;
   }
+
+  /* sidebar | drawer */
+  :root .sidebar--background {
+    background-color: rgb(229 231 235);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -150,6 +155,11 @@ tbody tr:last-child > th:last-child {
 
   /* dialog */
   :root .dialog__background {
+    background-color: #242424;
+  }
+
+  /* sidebar | drawer */
+  :root .sidebar--background {
     background-color: #242424;
   }
 
