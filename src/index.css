@@ -94,12 +94,6 @@ tbody tr:last-child > th:last-child {
   background-color: whitesmoke;
 }
 
-/* sidebar logout */
-:root .sidebar__logout:hover {
-  background-color: #545454;
-  border-color: #545454;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -160,6 +154,12 @@ tbody tr:last-child > th:last-child {
   :root .menu__calendar--background {
     background-color: rgb(229 231 235);
   }
+
+  /* sidebar logout */
+  :root .sidebar__logout:hover {
+    background-color: #C0C0C0;
+    border-color: #C0C0C0;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -176,6 +176,12 @@ tbody tr:last-child > th:last-child {
   /* sidebar | drawer */
   :root .sidebar--background {
     background-color: #242424;
+  }
+
+  /* sidebar logout */
+  :root .sidebar__logout:hover {
+    background-color: #545454;
+    border-color: #545454;
   }
 
   /* menu */
