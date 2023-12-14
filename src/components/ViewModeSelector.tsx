@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 type Props = {
   viewMode: number,
   setViewMode: Dispatch<SetStateAction<number>>,
-  setReloadProjectData: Dispatch<SetStateAction<boolean>>,
+  setReloadProjectDataCount: Dispatch<SetStateAction<number>>,
 }
 
 const viewModeIcons: Record<string, IconDefinition> = {
@@ -16,9 +16,9 @@ const viewModeIcons: Record<string, IconDefinition> = {
   kanban: faTableColumns,
 };
 
-const ViewModeSelector = ({ viewMode = 1, setViewMode, setReloadProjectData }: Props) => {
+const ViewModeSelector = ({ viewMode = 1, setViewMode, setReloadProjectDataCount }: Props) => {
   useEffect(() => {
-    setReloadProjectData(true);
+    setReloadProjectDataCount((number) => number += 1);
   }, [viewMode]);
   
   return (

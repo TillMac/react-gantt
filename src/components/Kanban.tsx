@@ -3,12 +3,17 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import type { DropResult } from 'react-beautiful-dnd';
 import { ITask } from '@/models/common';
 import KanbanCol from './KanbanCol';
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import useProjectFetch from '@/hooks/useProjectFetch';
+import { Task } from 'gantt-task-react';
 
 type KanBanProps = {
   taskData: ITask[] | null,
+  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>,
+  setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>,
+  setModalTask: Dispatch<SetStateAction<ITask | Task | null>>,
+  setReloadProjectDataCount: Dispatch<SetStateAction<number>>,
 }
 
 type columnId = 'TODO' | 'IN PROGRESS' | 'DONE' | 'WAIVED';
@@ -42,7 +47,7 @@ const initialColumns: Record<columnId, columnType> = {
   },
 };
 
-const Kanban = ({ taskData }: KanBanProps) => {
+const Kanban = ({ taskData, setIsEditModalOpen, setIsDeleteModalOpen, setModalTask, setReloadProjectDataCount }: KanBanProps) => {
   const { currentUser } = useAuth();
   const { setRequest } = useProjectFetch();
   const [columnTasks, setColumnTasks] = useState<Record<columnId, columnType>>(initialColumns);
@@ -67,6 +72,7 @@ const Kanban = ({ taskData }: KanBanProps) => {
         updateTime: new Date(),
       },
     });
+    setReloadProjectDataCount((number) => number += 1);
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -152,6 +158,9 @@ const Kanban = ({ taskData }: KanBanProps) => {
             id={col.id}
             title={col.title}
             taskData={columnTasks[col.id].list}
+            setIsEditModalOpen={setIsEditModalOpen}
+            setIsDeleteModalOpen={setIsDeleteModalOpen}
+            setModalTask={setModalTask}
           />
       ))}
       </DragDropContext>
