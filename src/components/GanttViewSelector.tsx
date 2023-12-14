@@ -12,7 +12,7 @@ const GanttViewSelector = ({ onViewModeChange }: GanttViewSelectorProps) => {
         defaultValue={ViewMode.Day}
         onValueChange={(value: ViewMode) => onViewModeChange(value)}
       >
-        <SelectTrigger>
+        <SelectTrigger className='hover:border-gray'>
           <SelectValue placeholder='Select a View' />
         </SelectTrigger>
         <SelectContent className='pointer-events-auto opacity-100 bg-gray text-white'>
