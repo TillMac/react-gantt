@@ -103,7 +103,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
         <DialogTrigger asChild>
           <FontAwesomeIcon icon={faPenToSquare} className='text-2xl hover:cursor-pointer hover:text-theme' />
         </DialogTrigger>
-        <DialogContent className='sm:max-w-md'>
+        <DialogContent className='sm:max-w-md dialog__background'>
           <DialogHeader>
             <DialogTitle>編輯 Project</DialogTitle>
             <DialogDescription>查看與編輯專案基本資料</DialogDescription>
@@ -114,6 +114,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
                 Project Name
               </Label>
               <Input
+                className='focus:border-theme'
                 placeholder={newProjectName}
                 onChange={(e) => {setNewProjectName(e.target.value)}}
               />
@@ -141,7 +142,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
         <DialogTrigger asChild>
           <FontAwesomeIcon icon={faTrashCan} className='text-2xl hover:cursor-pointer hover:text-red-500' />
         </DialogTrigger>
-        <DialogContent className='sm:max-w-md'>
+        <DialogContent className='sm:max-w-md dialog__background'>
           <DialogHeader>
             <DialogTitle>刪除 Project</DialogTitle>
             <DialogDescription>輸入專案名稱以刪除專案</DialogDescription>
@@ -150,6 +151,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
             <div className="grid flex-1 gap-2">
               <Input
                 type='text'
+                className='focus:border-red-900'
                 placeholder={newProjectName}
                 onChange={(e) => {setDeleteProjectName(e.target.value)}}
               />

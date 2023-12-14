@@ -12,10 +12,10 @@ const GanttViewSelector = ({ onViewModeChange }: GanttViewSelectorProps) => {
         defaultValue={ViewMode.Day}
         onValueChange={(value: ViewMode) => onViewModeChange(value)}
       >
-        <SelectTrigger>
+        <SelectTrigger className='hover:border-gray'>
           <SelectValue placeholder='Select a View' />
         </SelectTrigger>
-        <SelectContent className='pointer-events-auto opacity-100 bg-gray text-white'>
+        <SelectContent className='pointer-events-auto opacity-100 menu__select--background text-text'>
           <SelectGroup>
             <SelectItem className='cursor-pointer hover:text-white hover:bg-gray-500' value={ViewMode.Day}>Day</SelectItem>
             <SelectItem className='cursor-pointer' value={ViewMode.Week}>Week</SelectItem>

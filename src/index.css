@@ -140,6 +140,26 @@ tbody tr:last-child > th:last-child {
   :root .dialog__background {
     background-color: whitesmoke;
   }
+
+  /* sidebar | drawer */
+  :root .sidebar--background {
+    background-color: rgb(229 231 235);
+  }
+
+  /* menu */
+  :root .menu__select--background {
+    background-color: rgb(229 231 235);
+  }
+  
+  :root .menu__calendar--background {
+    background-color: rgb(229 231 235);
+  }
+
+  /* sidebar logout */
+  :root .sidebar__logout:hover {
+    background-color: #C0C0C0;
+    border-color: #C0C0C0;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -151,6 +171,26 @@ tbody tr:last-child > th:last-child {
   /* dialog */
   :root .dialog__background {
     background-color: #242424;
+  }
+
+  /* sidebar | drawer */
+  :root .sidebar--background {
+    background-color: #242424;
+  }
+
+  /* sidebar logout */
+  :root .sidebar__logout:hover {
+    background-color: #545454;
+    border-color: #545454;
+  }
+
+  /* menu */
+  :root .menu__select--background {
+    background-color: #242424
+  }
+  
+  :root .menu__calendar--background {
+    background-color: #808080;
   }
 
   /* row 右側甘特圖顏色 */
