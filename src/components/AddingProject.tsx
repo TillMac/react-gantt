@@ -59,7 +59,7 @@ const AddingProject = ({ uId, onProjectAdded }: Props) => {
             <h4 className='text-xl pl-4 text-text font-mono'>New Project</h4>
           </Button>
         </DialogTrigger>
-        <DialogContent className='flex flex-col gap-8'>
+        <DialogContent className='flex flex-col gap-8 dialog__background'>
           <DialogHeader className='text-xl'>
             Add New Project
           </DialogHeader>

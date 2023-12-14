@@ -103,7 +103,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
         <DialogTrigger asChild>
           <FontAwesomeIcon icon={faPenToSquare} className='text-2xl hover:cursor-pointer hover:text-theme' />
         </DialogTrigger>
-        <DialogContent className='sm:max-w-md'>
+        <DialogContent className='sm:max-w-md dialog__background'>
           <DialogHeader>
             <DialogTitle>編輯 Project</DialogTitle>
             <DialogDescription>查看與編輯專案基本資料</DialogDescription>
@@ -141,7 +141,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
         <DialogTrigger asChild>
           <FontAwesomeIcon icon={faTrashCan} className='text-2xl hover:cursor-pointer hover:text-red-500' />
         </DialogTrigger>
-        <DialogContent className='sm:max-w-md'>
+        <DialogContent className='sm:max-w-md dialog__background'>
           <DialogHeader>
             <DialogTitle>刪除 Project</DialogTitle>
             <DialogDescription>輸入專案名稱以刪除專案</DialogDescription>

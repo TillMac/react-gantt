@@ -74,7 +74,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
             <FontAwesomeIcon icon={faPlus} className="text-2xl my-4 text-white" />
           </Button>
         </DialogTrigger>
-        <DialogContent className='flex flex-col gap-8'>
+        <DialogContent className='flex flex-col gap-8 dialog__background'>
           <DialogHeader className='text-xl font-bold'>
             新增事項至 {project?.name}
           </DialogHeader>
