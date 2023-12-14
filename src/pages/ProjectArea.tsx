@@ -14,9 +14,38 @@ const ProjectArea = () => {
   const [viewMode, setViewMode] = useState<number>(1);
   const { activeProject, setReloadProjectListData } = useActiveProject();
   const [reloadProjectDataCount, setReloadProjectDataCount] = useState<number>(1);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [modalTask, setModalTask] = useState<ITask | Task | null>(null);
+  const [defaultValues, setDefaultValues] = useState<any>(null);
   const { data, isLoading, setRequest } = useProjectFetch();
   const { currentUser } = useAuth();
   const location = useLocation();
+
+  useEffect(() => {
+    if (modalTask) {
+      setDefaultValues({
+        taskName: modalTask.name,
+        status: modalTask.status,
+        start: modalTask.start,
+        end: modalTask.end,
+        type: modalTask.type as 'task' | 'milestone',
+        progress: modalTask.progress,
+      })
+      console.log('modalTask in Edit', modalTask);
+    }
+  }, [modalTask]);
+
+  const taskForm = useForm<z.infer<typeof taskFormSchema>>({
+    resolver: zodResolver(taskFormSchema),
+  });
+  
+  // 当 modalTask 更改时，重置表单的默认值
+  useEffect(() => {
+    if (modalTask && defaultValues) {
+      taskForm.reset(defaultValues);
+    }
+  }, [defaultValues, modalTask]);
 
   const getProjectData = () => {
     const projectIdFromLocation: string = location.pathname.replace(/^\//, '');

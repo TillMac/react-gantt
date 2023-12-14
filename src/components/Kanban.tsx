@@ -6,9 +6,13 @@ import KanbanCol from './KanbanCol';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import useProjectFetch from '@/hooks/useProjectFetch';
+import { Task } from 'gantt-task-react';
 
 type KanBanProps = {
   taskData: ITask[] | null,
+  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>,
+  setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>,
+  setModalTask: Dispatch<SetStateAction<ITask | Task | null>>,
   setReloadProjectDataCount: Dispatch<SetStateAction<number>>,
 }
 
@@ -154,6 +158,9 @@ const Kanban = ({ taskData, setIsEditModalOpen, setIsDeleteModalOpen, setModalTa
             id={col.id}
             title={col.title}
             taskData={columnTasks[col.id].list}
+            setIsEditModalOpen={setIsEditModalOpen}
+            setIsDeleteModalOpen={setIsDeleteModalOpen}
+            setModalTask={setModalTask}
           />
       ))}
       </DragDropContext>
