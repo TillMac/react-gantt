@@ -4,15 +4,15 @@ import useProjectFetch from '@/hooks/useProjectFetch';
 import { ITask } from '@/models/common';
 import { Gantt, Task, ViewMode } from 'gantt-task-react';
 import "gantt-task-react/dist/index.css";
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, MouseEvent, SetStateAction, useEffect, useState } from 'react';
 import GanttViewSelector from './GanttViewSelector';
 
 type Props = {
   taskData: ITask[] | null,
-  setReloadProjectData: Dispatch<SetStateAction<boolean>>,
+  setReloadProjectDataCount: Dispatch<SetStateAction<number>>,
 }
 
-const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
+const GanttChart: React.FC<Props> = ({ taskData, setIsEditModalOpen, setIsDeleteModalOpen, setModalTask, setReloadProjectDataCount }) => {
   const [isMatchXl, setIsMatchXl] = useState<boolean>(window.matchMedia('(min-width: 1440px)').matches);
   const [view, setView] = useState<ViewMode>(ViewMode.Day);
   const { currentUser } = useAuth();
@@ -68,21 +68,7 @@ const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
           }
         })
       }
-      // setReloadProjectData(true);
-    }
-  };
-
-  const handleTaskDelete = (task: Task) => {
-    const conf = window.confirm(`Are you sure you want to delete ${task.name}?`);
-    if (conf) {
-      setRequest({
-        uId: currentUser.uid,
-        projectId: task.project as string,
-        method: 'DELETE',
-        taskId: task.id,
-        accessToken: currentUser.accessToken,
-      });
-      setReloadProjectData(true);
+      setReloadProjectDataCount((number) => number += 1);
     }
   };
 
@@ -105,7 +91,7 @@ const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
         updateTime: new Date(),
       },
     })
-    setReloadProjectData(true);
+    setReloadProjectDataCount((number) => number += 1);
   };
 
   return (

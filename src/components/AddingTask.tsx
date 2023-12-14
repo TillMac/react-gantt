@@ -23,10 +23,10 @@ import { taskFormDateNameType, taskFormInputNameType, taskFormSchema, taskLabel 
 
 type Props = {
   project: IProject,
-  setReloadProjectData: Dispatch<SetStateAction<boolean>>,
+  setReloadProjectDataCount: Dispatch<SetStateAction<number>>,
 }
 
-const AddingTask: React.FC<Props> = ({ project, setReloadProjectData }) => {
+const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => {
   const { setRequest } = useProjectFetch();
   const { currentUser } = useAuth();
 
@@ -64,7 +64,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectData }) => {
         updateTime: new Date(),
       }
     });
-    setReloadProjectData(true);
+    setReloadProjectDataCount((number) => number += 1);
   };
 
   return (

@@ -13,7 +13,7 @@ import Kanban from '@/components/Kanban';
 const ProjectArea = () => {
   const [viewMode, setViewMode] = useState<number>(1);
   const { activeProject, setReloadProjectListData } = useActiveProject();
-  const [reloadProjectData, setReloadProjectData] = useState<boolean>(false);
+  const [reloadProjectDataCount, setReloadProjectDataCount] = useState<number>(1);
   const { data, isLoading, setRequest } = useProjectFetch();
   const { currentUser } = useAuth();
   const location = useLocation();
@@ -26,7 +26,6 @@ const ProjectArea = () => {
       method: 'GET',
       accessToken: currentUser.accessToken,
     });
-    setReloadProjectData(false);
   }
 
   useEffect(() => {
@@ -37,9 +36,11 @@ const ProjectArea = () => {
 
   useEffect(() => {
     if (reloadProjectData) {
+    if (reloadProjectDataCount > 0) {
       getProjectData();
+      console.log('reloadProjectDataCount', reloadProjectDataCount);
     }
-  }, [reloadProjectData])
+  }, [reloadProjectDataCount]);
   
   
   return (

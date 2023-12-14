@@ -13,10 +13,9 @@ import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   taskData: ITask[] | null,
-  setReloadProjectData: Dispatch<SetStateAction<boolean>>,
 }
 
-const TableList = ({ taskData }: Props) => {
+const TableList = ({ taskData, setIsDeleteModalOpen, setIsEditModalOpen, setModalTask }: Props) => {
   const tableData = { nodes: taskData };
 
   return (
