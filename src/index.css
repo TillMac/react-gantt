@@ -145,6 +145,11 @@ tbody tr:last-child > th:last-child {
   :root .sidebar--background {
     background-color: rgb(229 231 235);
   }
+
+  /* calender, select */
+  :root .menu--background {
+    background-color: rgb(229 231 235);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -160,6 +165,11 @@ tbody tr:last-child > th:last-child {
 
   /* sidebar | drawer */
   :root .sidebar--background {
+    background-color: #242424;
+  }
+
+  /* calender, select */
+  :root .menu--background {
     background-color: #242424;
   }
 
