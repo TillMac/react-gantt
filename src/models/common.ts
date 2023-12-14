@@ -18,7 +18,7 @@ const ITaskSchema = z.object({
   status: z.union([z.literal('TODO'), z.literal('IN PROGRESS'), z.literal('DONE'), z.literal('WAIVED')]).optional(),
   start: z.date(),
   end: z.date(),
-  description: z.string(),
+  description: z.string().optional(),
   project: z.string().uuid(),
   progress: z.number().min(0).max(100),
   type: z.union([z.literal('task'), z.literal('milestone')]),

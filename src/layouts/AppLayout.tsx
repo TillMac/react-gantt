@@ -33,7 +33,7 @@ function AppLayout() {
       handleFetchProjectListData();
       console.log('data reGET', data);
     }
-  }, [reloadProjectListData]);
+  }, [reloadProjectListData]);  
 
   return (
     <div className='w-screen flex'>

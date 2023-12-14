@@ -4,19 +4,39 @@ import useProjectFetch from '@/hooks/useProjectFetch';
 import { ITask } from '@/models/common';
 import { Gantt, Task, ViewMode } from 'gantt-task-react';
 import "gantt-task-react/dist/index.css";
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, MouseEvent, SetStateAction, useEffect, useState } from 'react';
 import GanttViewSelector from './GanttViewSelector';
+import useContextMenu from '@/hooks/useContextMenu';
+import CustomContextMenu from './CustomContextMenu';
 
 type Props = {
   taskData: ITask[] | null,
-  setReloadProjectData: Dispatch<SetStateAction<boolean>>,
+  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>,
+  setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>,
+  setModalTask: Dispatch<SetStateAction<ITask | Task | null>>,
+  setReloadProjectDataCount: Dispatch<SetStateAction<number>>,
 }
 
-const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
+const GanttChart: React.FC<Props> = ({ taskData, setIsEditModalOpen, setIsDeleteModalOpen, setModalTask, setReloadProjectDataCount }) => {
   const [isMatchXl, setIsMatchXl] = useState<boolean>(window.matchMedia('(min-width: 1440px)').matches);
   const [view, setView] = useState<ViewMode>(ViewMode.Day);
   const { currentUser } = useAuth();
   const { setRequest } = useProjectFetch();
+  const [ clickedPoint, setClickedPoint ] = useState<Record<'x' | 'y', number>>({
+    x: 0,
+    y: 0,
+  });
+  const { isClicked, setIsClicked, points, setPoints } = useContextMenu();
+
+  const handleDoubleClick = (task: Task) => {
+    console.log('dbClick', task);
+    setIsClicked(true);
+    setPoints({
+      x: clickedPoint.x,
+      y: clickedPoint.y,
+    });
+    setModalTask(task);
+  }
 
   let preStepsCount: number = 3;
   let columnWidth: number = 55;
@@ -61,28 +81,14 @@ const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
             project: editedTask.project as string,
             start: editedTask.start,
             end: editedTask.end,
-            description: 'none',
             progress: editedTask.progress,
             type: editedTask.type as 'task' || 'milestone',
             updateTime: new Date(),
+            description: 'none',
           }
         })
       }
-      // setReloadProjectData(true);
-    }
-  };
-
-  const handleTaskDelete = (task: Task) => {
-    const conf = window.confirm(`Are you sure you want to delete ${task.name}?`);
-    if (conf) {
-      setRequest({
-        uId: currentUser.uid,
-        projectId: task.project as string,
-        method: 'DELETE',
-        taskId: task.id,
-        accessToken: currentUser.accessToken,
-      });
-      setReloadProjectData(true);
+      setReloadProjectDataCount((number) => number += 1);
     }
   };
 
@@ -105,31 +111,42 @@ const GanttChart: React.FC<Props> = ({ taskData, setReloadProjectData }) => {
         updateTime: new Date(),
       },
     })
-    setReloadProjectData(true);
+    setReloadProjectDataCount((number) => number += 1);
   };
 
   return (
-    <div style={{ maxWidth: (isMatchXl) ? '1492px' : '850px'}}>
-      {(taskData === null) ? (<pre>No Data.</pre>) : (
-        <>
-          <GanttViewSelector onViewModeChange={viewMode => setView(viewMode)} />
-          <Gantt
-            preStepsCount={preStepsCount}
-            viewMode={view}
-            tasks={taskData}
-            onDelete={handleTaskDelete}
-            onProgressChange={handleProgressChange}
-            onDateChange={handleTaskChange}
-            listCellWidth=''
-            columnWidth={columnWidth}
-            todayColor='#ff9e1f1a'
-            barProgressColor='#81B8EF'
-            barProgressSelectedColor='#1A76D2'
-            barCornerRadius={12}
-          />
-        </>
+    <>
+      <div
+        style={{ maxWidth: (isMatchXl) ? '1492px' : '850px'}}
+        onClick={(e: MouseEvent) => setClickedPoint({
+          x: e.pageX,
+          y: e.pageY,
+        })}
+      >
+        {(taskData === null) ? (<pre>No Data.</pre>) : (
+          <>
+            <GanttViewSelector onViewModeChange={viewMode => setView(viewMode)} />
+            <Gantt
+              preStepsCount={preStepsCount}
+              viewMode={view}
+              tasks={taskData}
+              onDoubleClick={(task) => handleDoubleClick(task)}
+              onProgressChange={handleProgressChange}
+              onDateChange={handleTaskChange}
+              listCellWidth=''
+              columnWidth={columnWidth}
+              todayColor='#ff9e1f1a'
+              barProgressColor='#81B8EF'
+              barProgressSelectedColor='#1A76D2'
+              barCornerRadius={12}
+            />
+          </>
+        )}
+      </div>
+      {isClicked && (
+        <CustomContextMenu top={points.y} left={points.x} setIsEditModalOpen={setIsEditModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} />
       )}
-    </div>
+    </>
   )
 }
 
