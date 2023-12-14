@@ -55,35 +55,53 @@ const useProjectFetch = (initialUId: UId = null, initialProjectId: ProjectId = n
         if (!responseData) {
           setData(null);
         }
-        const tasksArray: ITask[] = Object.values(responseData);
-        const transformedTasksArray = tasksArray.map((task: ITask) => {
-          const startDate: Date = new Date(task.start);
-          const endDate: Date = new Date(task.end);
-          return ({
-          ...task,
-          start: startDate,
-          end: endDate,
-        })});
-        const orderedTasksArray: ITask[] = transformedTasksArray.sort((a, b) => {
-          const startDateA = a.start.getTime();
-          const startDateB = b.start.getTime();
-          return startDateA - startDateB;
-        })
-
-        console.log('tasksArray', orderedTasksArray);
-        setData(orderedTasksArray);
+        console.log('responseData', responseData);
+        if (method === 'GET') {
+          const tasksArray: ITask[] = Object.values(responseData);
+          console.log('tasksArray', tasksArray);
+          const transformedTasksArray = tasksArray.map((task: ITask) => {
+            const startDate: Date = new Date(task.start);
+            const endDate: Date = new Date(task.end);
+            return ({
+            ...task,
+            start: startDate,
+            end: endDate,
+          })});
+          console.log('transformedTasksArray', transformedTasksArray);
+          const orderedTasksArray: ITask[] = transformedTasksArray.sort((a, b) => {
+            const startDateA = a.start.getTime();
+            const startDateB = b.start.getTime();
+            return startDateA - startDateB;
+          })
+  
+          console.log('tasksArray', orderedTasksArray);
+          setData(orderedTasksArray);
+        } else if (method === 'PATCH' && data || method === 'PUT' && data) {
+          const newData = data.filter((task) => task.id !== responseData.id).concat(responseData);
+          const transformedTasksArray = newData.map((task: ITask) => {
+            const startDate: Date = new Date(task.start);
+            const endDate: Date = new Date(task.end);
+            return ({
+            ...task,
+            start: startDate,
+            end: endDate,
+          })});
+          console.log('transformedTasksArray', transformedTasksArray);
+          const orderedTasksArray: ITask[] = transformedTasksArray.sort((a, b) => {
+            const startDateA = a.start.getTime();
+            const startDateB = b.start.getTime();
+            return startDateA - startDateB;
+          })
+  
+          console.log('tasksArray', orderedTasksArray);
+          setData(orderedTasksArray);
+        }
       } catch (error) {
         setError(error);
       } finally {
         setIsLoading(false);
       }
     }, [accessToken, body, method, projectId, uId, taskId]);
-  
-  // 使用 useEffect 來觸發 fetch
-  useEffect(() => {
-    if (!uId) return;
-    fetchProjectData();
-  }, [projectId, taskId, accessToken, requestcount, method, body, uId, fetchProjectData]); // 當 uId、method 或 body 改變時，重新執行 useEffect
 
   const setRequest = useCallback(({ uId, method = 'GET', projectId = '', taskId = '', accessToken = null, body = null}: RequestSchema) => {
     setUId(uId);
@@ -94,6 +112,12 @@ const useProjectFetch = (initialUId: UId = null, initialProjectId: ProjectId = n
     setBody(body);
     setRequestCount(currentCount => currentCount + 1);
   }, []);
+
+  // 使用 useEffect 來觸發 fetch
+  useEffect(() => {
+    if (!uId) return;
+    fetchProjectData();
+  }, [projectId, taskId, accessToken, requestcount, method, body, uId, fetchProjectData, requestcount]); // 當 uId、method 或 body 改變時，重新執行 useEffect
 
   return {
     data,
