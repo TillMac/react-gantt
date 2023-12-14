@@ -1,6 +1,6 @@
 import { Button } from './ui/button'
 import { faFolderPlus } from '@fortawesome/free-solid-svg-icons'
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from './ui/dialog'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from './ui/dialog'
 import { Input } from './ui/input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
@@ -77,9 +77,11 @@ const AddingProject = ({ uId, onProjectAdded }: Props) => {
                   </FormItem>
                 )} 
               />
-              <DialogClose asChild>
-                <Button type='submit' className='bg-gray-500 text-white rounded-xl col-span-4 hover:bg-theme border-transparent'>Submit</Button>
-              </DialogClose>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button type='submit' className='bg-theme text-white rounded-xl col-span-4 hover:bg-white hover:text-theme hover:border-theme border-transparent'>Submit</Button>
+                </DialogClose>
+              </DialogFooter>
             </form>
           </Form>
         </DialogContent>
