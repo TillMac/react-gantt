@@ -146,8 +146,12 @@ tbody tr:last-child > th:last-child {
     background-color: rgb(229 231 235);
   }
 
-  /* calender, select */
-  :root .menu--background {
+  /* menu */
+  :root .menu__select--background {
+    background-color: rgb(229 231 235);
+  }
+  
+  :root .menu__calendar--background {
     background-color: rgb(229 231 235);
   }
 }
@@ -168,9 +172,13 @@ tbody tr:last-child > th:last-child {
     background-color: #242424;
   }
 
-  /* calender, select */
-  :root .menu--background {
-    background-color: #242424;
+  /* menu */
+  :root .menu__select--background {
+    background-color: #242424
+  }
+  
+  :root .menu__calendar--background {
+    background-color: #808080;
   }
 
   /* row 右側甘特圖顏色 */

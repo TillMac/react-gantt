@@ -72,7 +72,7 @@ const AddingProject = ({ uId, onProjectAdded }: Props) => {
                   <FormItem className='col-span-4 grid grid-cols-4 items-center'>
                     <FormLabel className='text-left'>Project Name</FormLabel>
                     <FormControl>
-                      <Input className='col-span-3 rounded-xl' {...field} />
+                      <Input className='col-span-3 rounded-xl focus:border-theme' {...field} />
                     </FormControl>
                   </FormItem>
                 )} 

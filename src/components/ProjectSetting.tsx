@@ -114,6 +114,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
                 Project Name
               </Label>
               <Input
+                className='focus:border-theme'
                 placeholder={newProjectName}
                 onChange={(e) => {setNewProjectName(e.target.value)}}
               />
@@ -150,6 +151,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
             <div className="grid flex-1 gap-2">
               <Input
                 type='text'
+                className='focus:border-red-900'
                 placeholder={newProjectName}
                 onChange={(e) => {setDeleteProjectName(e.target.value)}}
               />

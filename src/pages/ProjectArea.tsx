@@ -209,7 +209,7 @@ const ProjectArea = () => {
                                         <Button
                                           variant={"outline"}
                                           className={cn(
-                                            "w-full justify-start text-left font-normal rounded-xl",
+                                            "w-full justify-start text-left font-normal rounded-xl hover:border-theme",
                                             !field.value && "text-muted-foreground"
                                           )}
                                         >
@@ -217,7 +217,7 @@ const ProjectArea = () => {
                                           {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                                         </Button>
                                       </PopoverTrigger>
-                                      <PopoverContent className="w-auto p-0 bg-gray">
+                                      <PopoverContent className="w-auto p-0 menu__calendar--background">
                                         <Calendar
                                           mode="single"
                                           selected={field.value}
@@ -248,7 +248,7 @@ const ProjectArea = () => {
                                         <FormControl>
                                           <Input
                                             key={idx}
-                                            className='col-span-3 rounded-xl' {...field }
+                                            className='col-span-3 rounded-xl focus:border-theme' {...field }
                                             type={(taskLabel[label] !== 'Progress (%)' ? 'text' : 'number')}
                                             onChange={(e) => {
                                               if (taskLabel[label] === 'Progress (%)') {
@@ -263,11 +263,11 @@ const ProjectArea = () => {
                                         (taskLabel[label] !== 'Status') ? (
                                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                               <FormControl className='col-span-3 rounded-xl'>
-                                                <SelectTrigger>
+                                                <SelectTrigger className='hover:border-theme'>
                                                   <SelectValue placeholder='Select a type for ur event' />
                                                 </SelectTrigger>
                                               </FormControl>
-                                              <SelectContent className='bg-gray'>
+                                              <SelectContent className='menu__select--background'>
                                                 <SelectItem className='cursor-pointer' value="task">Task</SelectItem>
                                                 <SelectItem className='cursor-pointer' value="milestone">Milestone</SelectItem>
                                               </SelectContent>
@@ -275,11 +275,11 @@ const ProjectArea = () => {
                                           ) : (
                                             <Select onValueChange={field.onChange} defaultValue={field.value}>
                                               <FormControl className='col-span-3 rounded-xl'>
-                                                <SelectTrigger>
+                                                <SelectTrigger className='hover:border-theme'>
                                                   <SelectValue placeholder='Select a status for ur event' />
                                                 </SelectTrigger>
                                               </FormControl>
-                                              <SelectContent className='bg-gray'>
+                                              <SelectContent className='menu__select--background'>
                                                 <SelectItem className='cursor-pointer' value="TODO">Todo</SelectItem>
                                                 <SelectItem className='cursor-pointer' value="IN PROGRESS">In Progress</SelectItem>
                                                 <SelectItem className='cursor-pointer' value="DONE">Done</SelectItem>
