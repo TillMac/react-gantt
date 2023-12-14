@@ -1,6 +1,6 @@
 import { Button } from './ui/button'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from './ui/dialog'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from './ui/dialog'
 import { Input } from './ui/input'
 import { format } from "date-fns"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -74,7 +74,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
             <FontAwesomeIcon icon={faPlus} className="text-2xl my-4 text-white" />
           </Button>
         </DialogTrigger>
-        <DialogContent className='flex flex-col gap-8'>
+        <DialogContent className='flex flex-col gap-8 dialog__background'>
           <DialogHeader className='text-xl font-bold'>
             新增事項至 {project?.name}
           </DialogHeader>
@@ -98,7 +98,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
                                     <Button
                                       variant={"outline"}
                                       className={cn(
-                                        "w-full justify-start text-left font-normal rounded-xl",
+                                        "w-full justify-start text-left font-normal rounded-xl hover:border-theme",
                                         !field.value && "text-muted-foreground"
                                       )}
                                     >
@@ -106,7 +106,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
                                       {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
                                     </Button>
                                   </PopoverTrigger>
-                                  <PopoverContent className="w-auto p-0 bg-gray">
+                                  <PopoverContent className="w-auto p-0 menu__calendar--background">
                                     <Calendar
                                       mode="single"
                                       selected={field.value}
@@ -137,7 +137,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
                                     <FormControl>
                                       <Input
                                         key={idx}
-                                        className='col-span-3 rounded-xl' {...field }
+                                        className='col-span-3 rounded-xl focus:border-theme' {...field }
                                         type={(taskLabel[label] !== 'Progress (%)' ? 'text' : 'number')}
                                         onChange={(e) => {
                                           if (taskLabel[label] === 'Progress (%)') {
@@ -152,11 +152,11 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
                                     (taskLabel[label] !== 'Status') ? (
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                           <FormControl className='col-span-3 rounded-xl'>
-                                            <SelectTrigger>
+                                            <SelectTrigger className='hover:border-theme'>
                                               <SelectValue placeholder='Select a type for ur event' />
                                             </SelectTrigger>
                                           </FormControl>
-                                          <SelectContent className='bg-gray'>
+                                          <SelectContent className='menu__select--background'>
                                             <SelectItem className='cursor-pointer' value="task">Task</SelectItem>
                                             <SelectItem className='cursor-pointer' value="milestone">Milestone</SelectItem>
                                           </SelectContent>
@@ -164,11 +164,11 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
                                       ) : (
                                         <Select onValueChange={field.onChange} defaultValue={field.value}>
                                           <FormControl className='col-span-3 rounded-xl'>
-                                            <SelectTrigger>
+                                            <SelectTrigger className='hover:border-theme'>
                                               <SelectValue placeholder='Select a status for ur event' />
                                             </SelectTrigger>
                                           </FormControl>
-                                          <SelectContent className='bg-gray'>
+                                          <SelectContent className='menu__select--background'>
                                             <SelectItem className='cursor-pointer' value="TODO">Todo</SelectItem>
                                             <SelectItem className='cursor-pointer' value="IN PROGRESS">In Progress</SelectItem>
                                             <SelectItem className='cursor-pointer' value="DONE">Done</SelectItem>
@@ -185,9 +185,11 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
                     }
                   })
                 }
-                <DialogClose asChild>
-                  <Button type='submit' className='bg-gray-500 text-white rounded-xl col-span-4 hover:bg-theme border-transparent'>Submit</Button>
-                </DialogClose>
+                <DialogFooter>
+                  <DialogClose asChild>
+                    <Button type='submit' className='text-white bg-theme rounded-xl col-span-4 hover:bg-white hover:text-theme hover:border-theme border-transparent'>Submit</Button>
+                  </DialogClose>
+                </DialogFooter>
               </form>
             </Form>
         </DialogContent>

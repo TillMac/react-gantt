@@ -39,7 +39,7 @@ const Sidebar = ({ data, setActiveProject, setReloadProjectListData }: Props) =>
   };
 
   return (
-    <div className="xl:w-1/5 lg:w-1/3 flex flex-col gap-4 bg-gray-200 h-screen sticky z-10 p-0 mt-0 ml-0 mr-auto border-r-2 border-gray">
+    <div className="xl:w-1/5 lg:w-1/3 flex flex-col gap-4 sidebar--background h-screen sticky z-10 p-0 mt-0 ml-0 mr-auto border-r-2 border-gray">
       <section className="w-full pl-6 pt-6 flex flex-wrap items-center">
         <AddingProject uId={currentUser.uid} onProjectAdded={() => setReloadProjectListData(true)} />
         <NavLink to='/dashboard' className='w-5/6 m-0 px-3 py-1 justify-start flex items-center hover:bg-gray hover:border-gray rounded-xl' style={({ isActive }) => {
@@ -70,7 +70,7 @@ const Sidebar = ({ data, setActiveProject, setReloadProjectListData }: Props) =>
             </Button>
           )
         }
-        <Button className='m-0 hover:bg-gray hover:border-gray rounded-full ml-auto mr-0' onClick={logoutGoogle}>
+        <Button className='m-0 sidebar__logout rounded-full ml-auto mr-0' onClick={logoutGoogle}>
           <FontAwesomeIcon icon={faArrowRightFromBracket} className='text-text text-xl' />
         </Button>
       </section>

@@ -1,6 +1,6 @@
 import { Button } from './ui/button'
 import { faFolderPlus } from '@fortawesome/free-solid-svg-icons'
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from './ui/dialog'
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from './ui/dialog'
 import { Input } from './ui/input'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Form, FormControl, FormField, FormItem, FormLabel } from './ui/form'
@@ -59,7 +59,7 @@ const AddingProject = ({ uId, onProjectAdded }: Props) => {
             <h4 className='text-xl pl-4 text-text font-mono'>New Project</h4>
           </Button>
         </DialogTrigger>
-        <DialogContent className='flex flex-col gap-8'>
+        <DialogContent className='flex flex-col gap-8 dialog__background'>
           <DialogHeader className='text-xl'>
             Add New Project
           </DialogHeader>
@@ -72,14 +72,16 @@ const AddingProject = ({ uId, onProjectAdded }: Props) => {
                   <FormItem className='col-span-4 grid grid-cols-4 items-center'>
                     <FormLabel className='text-left'>Project Name</FormLabel>
                     <FormControl>
-                      <Input className='col-span-3 rounded-xl' {...field} />
+                      <Input className='col-span-3 rounded-xl focus:border-theme' {...field} />
                     </FormControl>
                   </FormItem>
                 )} 
               />
-              <DialogClose asChild>
-                <Button type='submit' className='bg-gray-500 text-white rounded-xl col-span-4 hover:bg-theme border-transparent'>Submit</Button>
-              </DialogClose>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button type='submit' className='bg-theme text-white rounded-xl col-span-4 hover:bg-white hover:text-theme hover:border-theme border-transparent'>Submit</Button>
+                </DialogClose>
+              </DialogFooter>
             </form>
           </Form>
         </DialogContent>
