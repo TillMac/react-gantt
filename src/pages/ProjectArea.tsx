@@ -133,7 +133,7 @@ const ProjectArea = () => {
         <h2 className='text-3xl'>{activeProject?.name}</h2>
         <ProjectSetting project={activeProject} setReloadProjectListData={setReloadProjectListData} />
       </section>
-      <ViewModeSelector viewMode={viewMode} setViewMode={setViewMode} setReloadProjectDataCount={setReloadProjectDataCount} />
+      <ViewModeSelector viewMode={viewMode} setViewMode={setViewMode} />
       <AddingTask project={activeProject} setReloadProjectDataCount={setReloadProjectDataCount} />
         { !isLoading && data ? (
           viewMode === 1 ? <GanttChart taskData={data} setIsEditModalOpen={setIsEditModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} setModalTask={setModalTask} setReloadProjectDataCount={setReloadProjectDataCount} /> : (
