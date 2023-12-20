@@ -19,15 +19,16 @@ type Props = {
 
 const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
   const [newProjectName, setNewProjectName] = useState<string>('');
+  const [originProjectName, setOriginProjectName] = useState<string>('');
   const [isStar, setIsStar] = useState<boolean>();
   const [deleteProjectName, setDeleteProjectName] = useState<string>('');
-  const { setRequest  } = useProjectListFetch();
+  const { setRequest } = useProjectListFetch();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (project) {
-      setNewProjectName(project.name);
+      setOriginProjectName(project.name);
       setIsStar(project.isStar)
     }
   }, [project]);
@@ -69,7 +70,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
   };
 
   const handleProjectDelete = () => {
-    if (deleteProjectName !== newProjectName) {
+    if (deleteProjectName !== originProjectName) {
       return;
     }
     setRequest({
@@ -105,7 +106,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
         </DialogTrigger>
         <DialogContent className='sm:max-w-md dialog__background'>
           <DialogHeader>
-            <DialogTitle>編輯 Project</DialogTitle>
+            <DialogTitle>編輯 Project 名稱</DialogTitle>
             <DialogDescription>查看與編輯專案基本資料</DialogDescription>
           </DialogHeader>
           <div className="flex items-center space-x-2">
@@ -115,7 +116,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
               </Label>
               <Input
                 className='focus:border-theme'
-                placeholder={newProjectName}
+                placeholder={originProjectName}
                 onChange={(e) => {setNewProjectName(e.target.value)}}
               />
             </div>
@@ -123,9 +124,9 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
               <DialogClose asChild>
                 <Button
                   size="sm"
-                  className="px-3 rounded-lg border-gray"
+                  className="px-3 rounded-lg border-gray hover:border-theme"
                   onClick={handleProjectUpdate}
-                  disabled={(newProjectName === newProjectName || newProjectName === '') ? true : false}
+                  disabled={(newProjectName === originProjectName || newProjectName.trim() === '') ? true : false}
                 >
                   <span className="text-xl">Update</span>
                 </Button>
@@ -152,7 +153,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
               <Input
                 type='text'
                 className='focus:border-red-900'
-                placeholder={newProjectName}
+                placeholder={originProjectName}
                 onChange={(e) => {setDeleteProjectName(e.target.value)}}
               />
             </div>
@@ -162,7 +163,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
                   size="sm"
                   variant='destructive'
                   className="px-3 rounded-lg border-red-500 text-red-500"
-                  disabled={(deleteProjectName !== newProjectName ? true : false)}
+                  disabled={(deleteProjectName !== originProjectName ? true : false)}
                   onClick={() => handleProjectDelete()}>
                   <span className="text-xl">Delete</span>
                 </Button>
@@ -175,4 +176,4 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
   )
 }
 
-export default ProjectSetting
+export default ProjectSetting;
