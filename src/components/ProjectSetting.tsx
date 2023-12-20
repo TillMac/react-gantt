@@ -124,7 +124,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
               <DialogClose asChild>
                 <Button
                   size="sm"
-                  className="px-3 rounded-lg border-gray"
+                  className="px-3 rounded-lg border-gray hover:border-theme"
                   onClick={handleProjectUpdate}
                   disabled={(newProjectName === originProjectName || newProjectName.trim() === '') ? true : false}
                 >
