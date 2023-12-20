@@ -175,4 +175,4 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
   )
 }
 
-export default ProjectSetting
+export default ProjectSetting;
