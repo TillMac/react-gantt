@@ -21,7 +21,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
   const [newProjectName, setNewProjectName] = useState<string>('');
   const [isStar, setIsStar] = useState<boolean>();
   const [deleteProjectName, setDeleteProjectName] = useState<string>('');
-  const { setRequest  } = useProjectListFetch();
+  const { setRequest } = useProjectListFetch();
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
