@@ -105,7 +105,7 @@ const ProjectSetting = ({ project, setReloadProjectListData }: Props) => {
         </DialogTrigger>
         <DialogContent className='sm:max-w-md dialog__background'>
           <DialogHeader>
-            <DialogTitle>編輯 Project</DialogTitle>
+            <DialogTitle>編輯 Project 名稱</DialogTitle>
             <DialogDescription>查看與編輯專案基本資料</DialogDescription>
           </DialogHeader>
           <div className="flex items-center space-x-2">
