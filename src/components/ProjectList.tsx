@@ -28,10 +28,7 @@ const ProjectList = ({ data, setActiveProject }: Props) => {
         !data || data.length === 0 ? (
           <h4 className='text-lg pl-4 text-text font-mono italic'>No Projects.</h4>
         ) : (
-          data
-          .filter((project: IProject) => project)
           .map((project: IProject, idx: number) => {
-            console.log('project in ProjectList Map', project);
             if (project) {
               return (
                 <NavLink to={`/${project.id}`} key={idx} className='w-5/6 m-0 px-3 py-1 justify-start items-center flex hover:bg-gray hover:border-gray rounded-xl'  style={({ isActive }) => {
