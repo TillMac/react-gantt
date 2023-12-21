@@ -25,6 +25,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import CustomProgress from "@/components/CustomProgress";
 
 const ProjectArea = () => {
   const [viewMode, setViewMode] = useState<number>(1);
@@ -36,6 +37,9 @@ const ProjectArea = () => {
   const [modalTask, setModalTask] = useState<ITask | any | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [defaultValues, setDefaultValues] = useState<any>(null);
+  const [finishedCount, setFinishedCount] = useState<number>(0);
+  const [undoneCount, setUndoneCount] = useState<number>(0);
+  const [progress, setProgress] = useState<number>(1);
   const { data, isLoading, setRequest } = useProjectFetch();
   const { currentUser } = useAuth();
   const location = useLocation();
@@ -126,191 +130,208 @@ const ProjectArea = () => {
     setReloadProjectDataCount((number) => number += 1);
     };
   
+  useEffect(() => {
+    if (data) {
+      const finishedTasks = data.filter((project) => project.status !== 'TODO' && project.status !== 'IN PROGRESS');
+      setFinishedCount(finishedTasks.length);
+      setUndoneCount(data.length - finishedTasks.length);
+      if (finishedTasks.length !== 0) {
+        setProgress((finishedTasks.length / data.length) * 100);
+      } else {
+        setProgress(1);
+      }
+    }
+  }, [data, reloadProjectDataCount])
   
   return (
-    <>
-      <section className="w-full flex justify-between items-center">
-        <h2 className='text-3xl'>{activeProject?.name}</h2>
-        <ProjectSetting project={activeProject} setReloadProjectListData={setReloadProjectListData} />
-      </section>
-      <ViewModeSelector viewMode={viewMode} setViewMode={setViewMode} />
-      <AddingTask project={activeProject} setReloadProjectDataCount={setReloadProjectDataCount} />
-        { !isLoading && data ? (
-          viewMode === 1 ? <GanttChart taskData={data} setIsEditModalOpen={setIsEditModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} setModalTask={setModalTask} setReloadProjectDataCount={setReloadProjectDataCount} /> : (
-            viewMode === 0 ? <TableList taskData={data} setIsEditModalOpen={setIsEditModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} setModalTask={setModalTask} /> : (
-              <Kanban taskData={data} setIsEditModalOpen={setIsEditModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} setModalTask={setModalTask} setReloadProjectDataCount={setReloadProjectDataCount} />
+    <main className='w-full h-screen'>
+      {
+        (data && <CustomProgress progressValue={progress} rootClassName='w-full h-2 rounded-none' indicatorClassName='rounded-none bg-[#539312]' undoneCount={undoneCount} finishedCount={finishedCount} />)
+      }
+      <section className='w-full p-10'>
+        <section className="w-full flex justify-between items-center">
+          <h2 className='text-3xl'>{activeProject?.name}</h2>
+          <ProjectSetting project={activeProject} setReloadProjectListData={setReloadProjectListData} />
+        </section>
+        <ViewModeSelector viewMode={viewMode} setViewMode={setViewMode} />
+        <AddingTask project={activeProject} setReloadProjectDataCount={setReloadProjectDataCount} />
+          { !isLoading && data ? (
+            viewMode === 1 ? <GanttChart taskData={data} setIsEditModalOpen={setIsEditModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} setModalTask={setModalTask} setReloadProjectDataCount={setReloadProjectDataCount} /> : (
+              viewMode === 0 ? <TableList taskData={data} setIsEditModalOpen={setIsEditModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} setModalTask={setModalTask} /> : (
+                <Kanban taskData={data} setIsEditModalOpen={setIsEditModalOpen} setIsDeleteModalOpen={setIsDeleteModalOpen} setModalTask={setModalTask} setReloadProjectDataCount={setReloadProjectDataCount} />
+              )
+            )): (!isLoading) ? <pre>No data.</pre> : <pre>Loading...</pre>
+          }
+          {
+            isDeleteModalOpen && modalTask && (
+              <AlertDialog
+                open={isDeleteModalOpen}
+                onOpenChange={(open) => {
+                  if (!open) {
+                    setIsDeleteModalOpen(false);
+                  }
+                }}
+              >
+                <AlertDialogContent onEscapeKeyDown={() => setIsDeleteModalOpen(false)} className='dialog__background'>
+                  <AlertDialogHeader className='text-text'>
+                    <AlertDialogTitle>Are you sure absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription className='text-text'>This action cannot be undo. This will permanently delete '{modalTask.name}' from the server.</AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel
+                      className='rounded-xl hover:border-theme'
+                      onClick={() => setIsDeleteModalOpen(false)}
+                    >
+                      Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleTaskDelete}
+                      className='rounded-xl text-white bg-red-700 hover:bg-red-600 hover:border-red-600'
+                    >
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             )
-          )): (!isLoading) ? <pre>No data.</pre> : <pre>Loading...</pre>
-        }
-        {
-          isDeleteModalOpen && modalTask && (
-            <AlertDialog
-              open={isDeleteModalOpen}
-              onOpenChange={(open) => {
-                if (!open) {
-                  setIsDeleteModalOpen(false);
-                }
-              }}
-            >
-              <AlertDialogContent onEscapeKeyDown={() => setIsDeleteModalOpen(false)} className='dialog__background'>
-                <AlertDialogHeader className='text-text'>
-                  <AlertDialogTitle>Are you sure absolutely sure?</AlertDialogTitle>
-                  <AlertDialogDescription className='text-text'>This action cannot be undo. This will permanently delete '{modalTask.name}' from the server.</AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel
-                    className='rounded-xl hover:border-theme'
-                    onClick={() => setIsDeleteModalOpen(false)}
-                  >
-                    Cancel
-                  </AlertDialogCancel>
-                  <AlertDialogAction
-                    onClick={handleTaskDelete}
-                    className='rounded-xl text-white bg-red-700 hover:bg-red-600 hover:border-red-600'
-                  >
-                    Delete
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-          )
-        }
-        {
-          isEditModalOpen && modalTask && (
-            <Dialog
-              open={isEditModalOpen}
-              onOpenChange={(open) => {
-                if (!open) {
-                  setIsEditModalOpen(false);
-                }
-              }}
-            >
-              <DialogContent onEscapeKeyDown={() => setIsEditModalOpen(false)} className='dialog__background'>
-                <DialogHeader className='text-text'>
-                  <DialogTitle>Edit {modalTask.name}</DialogTitle>
-                </DialogHeader>
-                <Form {...taskForm}>
-                  <form onSubmit={taskForm.handleSubmit(taskUpdateSubmitHandler)} className="flex flex-col gap-8">
-                    {
-                      Object.keys(taskLabel).map((label: string, idx: number) => {
-                        if (label.includes('start') || label.includes('end')) {
-                          return (
-                            <FormField
-                              key={idx}
-                              control={taskForm.control}
-                              name={label as taskFormDateNameType}
-                              render={({ field }) => (
-                                <FormItem className='grid grid-cols-4 items-center'>
-                                  <FormLabel className='text-left'>{taskLabel[label]}</FormLabel>
-                                  <section className='col-span-3'>
-                                    <FormControl>
-                                    <Popover>
-                                      <PopoverTrigger asChild>
-                                        <Button
-                                          variant={"outline"}
-                                          className={cn(
-                                            "w-full justify-start text-left font-normal rounded-xl hover:border-theme",
-                                            !field.value && "text-muted-foreground"
-                                          )}
-                                        >
-                                          <CalendarIcon className="mr-2 h-4 w-4" />
-                                          {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
-                                        </Button>
-                                      </PopoverTrigger>
-                                      <PopoverContent className="w-auto p-0 menu__calendar--background">
-                                        <Calendar
-                                          mode="single"
-                                          selected={field.value}
-                                          onSelect={field.onChange}
-                                          initialFocus
-                                          className='pointer-events-auto'
-                                        />
-                                      </PopoverContent>
-                                    </Popover>
-                                    </FormControl>
-                                  </section>
-                                  <FormMessage className='col-span-4 text-red-500' />
-                                </FormItem>
-                              )}
-                            />
-                          );
-                        } else {
-                          return (
-                            <FormField
-                              key={idx}
-                              control={taskForm.control}
-                              name={label as taskFormInputNameType}
-                              render={({ field }) => (
-                                <FormItem className='grid grid-cols-4 items-center'>
-                                  <FormLabel className='text-left' key={idx}>{taskLabel[label]}</FormLabel>
-                                    {
-                                      (taskLabel[label] !== 'Type' && taskLabel[label] !== 'Status') ? (
-                                        <FormControl>
-                                          <Input
-                                            key={idx}
-                                            className='col-span-3 rounded-xl focus:border-theme' {...field }
-                                            type={(taskLabel[label] !== 'Progress (%)' ? 'text' : 'number')}
-                                            onChange={(e) => {
-                                              if (taskLabel[label] === 'Progress (%)') {
-                                                field.onChange(Number(e.target.value))
-                                              } else {
-                                                field.onChange(e.target.value.toString());
-                                              }
-                                            }}
+          }
+          {
+            isEditModalOpen && modalTask && (
+              <Dialog
+                open={isEditModalOpen}
+                onOpenChange={(open) => {
+                  if (!open) {
+                    setIsEditModalOpen(false);
+                  }
+                }}
+              >
+                <DialogContent onEscapeKeyDown={() => setIsEditModalOpen(false)} className='dialog__background'>
+                  <DialogHeader className='text-text'>
+                    <DialogTitle>Edit {modalTask.name}</DialogTitle>
+                  </DialogHeader>
+                  <Form {...taskForm}>
+                    <form onSubmit={taskForm.handleSubmit(taskUpdateSubmitHandler)} className="flex flex-col gap-8">
+                      {
+                        Object.keys(taskLabel).map((label: string, idx: number) => {
+                          if (label.includes('start') || label.includes('end')) {
+                            return (
+                              <FormField
+                                key={idx}
+                                control={taskForm.control}
+                                name={label as taskFormDateNameType}
+                                render={({ field }) => (
+                                  <FormItem className='grid grid-cols-4 items-center'>
+                                    <FormLabel className='text-left'>{taskLabel[label]}</FormLabel>
+                                    <section className='col-span-3'>
+                                      <FormControl>
+                                      <Popover>
+                                        <PopoverTrigger asChild>
+                                          <Button
+                                            variant={"outline"}
+                                            className={cn(
+                                              "w-full justify-start text-left font-normal rounded-xl hover:border-theme",
+                                              !field.value && "text-muted-foreground"
+                                            )}
+                                          >
+                                            <CalendarIcon className="mr-2 h-4 w-4" />
+                                            {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
+                                          </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0 menu__calendar--background">
+                                          <Calendar
+                                            mode="single"
+                                            selected={field.value}
+                                            onSelect={field.onChange}
+                                            initialFocus
+                                            className='pointer-events-auto'
                                           />
-                                        </FormControl>
-                                      ) : 
-                                        (taskLabel[label] !== 'Status') ? (
-                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                              <FormControl className='col-span-3 rounded-xl'>
-                                                <SelectTrigger className='hover:border-theme'>
-                                                  <SelectValue placeholder='Select a type for ur event' />
-                                                </SelectTrigger>
-                                              </FormControl>
-                                              <SelectContent className='menu__select--background'>
-                                                <SelectItem className='cursor-pointer' value="task">Task</SelectItem>
-                                                <SelectItem className='cursor-pointer' value="milestone">Milestone</SelectItem>
-                                              </SelectContent>
-                                            </Select>
-                                          ) : (
-                                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                              <FormControl className='col-span-3 rounded-xl'>
-                                                <SelectTrigger className='hover:border-theme'>
-                                                  <SelectValue placeholder='Select a status for ur event' />
-                                                </SelectTrigger>
-                                              </FormControl>
-                                              <SelectContent className='menu__select--background'>
-                                                <SelectItem className='cursor-pointer' value="TODO">Todo</SelectItem>
-                                                <SelectItem className='cursor-pointer' value="IN PROGRESS">In Progress</SelectItem>
-                                                <SelectItem className='cursor-pointer' value="DONE">Done</SelectItem>
-                                                <SelectItem className='cursor-pointer' value="WAIVED">Waived</SelectItem>
-                                              </SelectContent>
-                                            </Select>
-                                          )
-                                    }
-                                  <FormMessage className='col-span-4 text-red-500' />
-                                </FormItem>
-                              )}                         
-                            />
-                          )
-                        }
-                      })
-                    }
-                    <DialogFooter>
-                      <Button
-                        type='submit'
-                        className='rounded-xl text-white bg-theme hover:bg-white hover:text-theme hover:border-theme'
-                      >
-                        Update
-                      </Button>
-                    </DialogFooter>
-                  </form>
-                </Form>
-              </DialogContent>
-            </Dialog>
-          )
-        }
-    </>
+                                        </PopoverContent>
+                                      </Popover>
+                                      </FormControl>
+                                    </section>
+                                    <FormMessage className='col-span-4 text-red-500' />
+                                  </FormItem>
+                                )}
+                              />
+                            );
+                          } else {
+                            return (
+                              <FormField
+                                key={idx}
+                                control={taskForm.control}
+                                name={label as taskFormInputNameType}
+                                render={({ field }) => (
+                                  <FormItem className='grid grid-cols-4 items-center'>
+                                    <FormLabel className='text-left' key={idx}>{taskLabel[label]}</FormLabel>
+                                      {
+                                        (taskLabel[label] !== 'Type' && taskLabel[label] !== 'Status') ? (
+                                          <FormControl>
+                                            <Input
+                                              key={idx}
+                                              className='col-span-3 rounded-xl focus:border-theme' {...field }
+                                              type={(taskLabel[label] !== 'Progress (%)' ? 'text' : 'number')}
+                                              onChange={(e) => {
+                                                if (taskLabel[label] === 'Progress (%)') {
+                                                  field.onChange(Number(e.target.value))
+                                                } else {
+                                                  field.onChange(e.target.value.toString());
+                                                }
+                                              }}
+                                            />
+                                          </FormControl>
+                                        ) : 
+                                          (taskLabel[label] !== 'Status') ? (
+                                              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                <FormControl className='col-span-3 rounded-xl'>
+                                                  <SelectTrigger className='hover:border-theme'>
+                                                    <SelectValue placeholder='Select a type for ur event' />
+                                                  </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent className='menu__select--background'>
+                                                  <SelectItem className='cursor-pointer' value="task">Task</SelectItem>
+                                                  <SelectItem className='cursor-pointer' value="milestone">Milestone</SelectItem>
+                                                </SelectContent>
+                                              </Select>
+                                            ) : (
+                                              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                <FormControl className='col-span-3 rounded-xl'>
+                                                  <SelectTrigger className='hover:border-theme'>
+                                                    <SelectValue placeholder='Select a status for ur event' />
+                                                  </SelectTrigger>
+                                                </FormControl>
+                                                <SelectContent className='menu__select--background'>
+                                                  <SelectItem className='cursor-pointer' value="TODO">Todo</SelectItem>
+                                                  <SelectItem className='cursor-pointer' value="IN PROGRESS">In Progress</SelectItem>
+                                                  <SelectItem className='cursor-pointer' value="DONE">Done</SelectItem>
+                                                  <SelectItem className='cursor-pointer' value="WAIVED">Waived</SelectItem>
+                                                </SelectContent>
+                                              </Select>
+                                            )
+                                      }
+                                    <FormMessage className='col-span-4 text-red-500' />
+                                  </FormItem>
+                                )}                         
+                              />
+                            )
+                          }
+                        })
+                      }
+                      <DialogFooter>
+                        <Button
+                          type='submit'
+                          className='rounded-xl text-white bg-theme hover:bg-white hover:text-theme hover:border-theme'
+                        >
+                          Update
+                        </Button>
+                      </DialogFooter>
+                    </form>
+                  </Form>
+                </DialogContent>
+              </Dialog>
+            )
+          }
+      </section>
+    </main>
   )
 }
 
