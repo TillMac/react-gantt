@@ -28,6 +28,9 @@ const taskFormSchema = z.object({
   progress: z.number().min(0, {
     message: 'The progress(%) must between 0 and 100.'
   }).max(100)
+}).refine(data => data.start < data.end, {
+  message: 'The start date must be before the end date.',
+  path: ['start'],
 });
 
 type taskFormInputNameType = "taskName";
