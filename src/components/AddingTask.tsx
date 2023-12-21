@@ -26,6 +26,7 @@ type Props = {
 }
 
 const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => {
+  const [isAddingModalOpen, setIsAddingModalOpen] = useState<boolean>(false);
   const { setRequest } = useProjectFetch();
   const { currentUser } = useAuth();
 
@@ -63,12 +64,24 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
         updateTime: new Date(),
       }
     });
+    setIsAddingModalOpen(false);
     setReloadProjectDataCount((number) => number += 1);
   };
 
   return (
-    <Dialog modal={true}>
-        <DialogTrigger asChild>
+    <Dialog
+      modal
+      open={isAddingModalOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          setIsAddingModalOpen(false);
+        }
+      }}
+    >
+        <DialogTrigger
+          asChild
+          onClick={() => setIsAddingModalOpen(true)}
+        >
           <Button className="w-16 h-16 bg-gray-500 rounded-full absolute z-50 bottom-10 right-10 border-transparent hover:bg-theme">
             <FontAwesomeIcon icon={faPlus} className="text-2xl my-4 text-white" />
           </Button>
@@ -185,9 +198,7 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
                   })
                 }
                 <DialogFooter>
-                  <DialogClose asChild>
-                    <Button type='submit' className='text-white bg-theme rounded-xl col-span-4 hover:bg-white hover:text-theme hover:border-theme border-transparent'>Submit</Button>
-                  </DialogClose>
+                  <Button type='submit' className='text-white bg-theme rounded-xl col-span-4 hover:bg-white hover:text-theme hover:border-theme border-transparent'>Submit</Button>
                 </DialogFooter>
               </form>
             </Form>
