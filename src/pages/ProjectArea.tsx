@@ -25,6 +25,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import CustomProgress from "@/components/CustomProgress";
 
 const ProjectArea = () => {
   const [viewMode, setViewMode] = useState<number>(1);
@@ -36,6 +37,9 @@ const ProjectArea = () => {
   const [modalTask, setModalTask] = useState<ITask | any | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [defaultValues, setDefaultValues] = useState<any>(null);
+  const [finishedCount, setFinishedCount] = useState<number>(0);
+  const [undoneCount, setUndoneCount] = useState<number>(0);
+  const [progress, setProgress] = useState<number>(1);
   const { data, isLoading, setRequest } = useProjectFetch();
   const { currentUser } = useAuth();
   const location = useLocation();
@@ -126,9 +130,24 @@ const ProjectArea = () => {
     setReloadProjectDataCount((number) => number += 1);
     };
   
+  useEffect(() => {
+    if (data) {
+      const finishedTasks = data.filter((project) => project.status !== 'TODO' && project.status !== 'IN PROGRESS');
+      setFinishedCount(finishedTasks.length);
+      setUndoneCount(data.length - finishedTasks.length);
+      if (finishedTasks.length !== 0) {
+        setProgress((finishedTasks.length / data.length) * 100);
+      } else {
+        setProgress(1);
+      }
+    }
+  }, [data, reloadProjectDataCount])
   
   return (
     <main className='w-full h-screen'>
+      {
+        (data && <CustomProgress progressValue={progress} rootClassName='w-full h-2 rounded-none' indicatorClassName='rounded-none bg-[#539312]' undoneCount={undoneCount} finishedCount={finishedCount} />)
+      }
       <section className='w-full p-10'>
         <section className="w-full flex justify-between items-center">
           <h2 className='text-3xl'>{activeProject?.name}</h2>
