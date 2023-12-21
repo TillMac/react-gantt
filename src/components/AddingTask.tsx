@@ -1,25 +1,24 @@
-import { Button } from './ui/button'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from './ui/dialog'
-import { Input } from './ui/input'
-import { format } from "date-fns"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form'
-import * as z from 'zod'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from 'react-hook-form'
-import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
-import { cn } from '../../@/lib/utils'
-import { Calendar as CalendarIcon } from "lucide-react"
-import { Calendar } from './ui/calendar'
-import { IProject } from '@/models/common'
-import useProjectFetch from '@/hooks/useProjectFetch'
-import { useAuth } from '@/context/AuthContext'
+import { Button } from './ui/button';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from './ui/dialog';
+import { Input } from './ui/input';
+import { format } from "date-fns";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from './ui/form';
+import * as z from 'zod';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from 'react-hook-form';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { cn } from '../../@/lib/utils';
+import { Calendar as CalendarIcon } from "lucide-react";
+import { Calendar } from './ui/calendar';
+import { IProject } from '@/models/common';
+import useProjectFetch from '@/hooks/useProjectFetch';
+import { useAuth } from '@/context/AuthContext';
 import { v4 as uuidv4 } from 'uuid';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
-import React, { Dispatch, SetStateAction } from 'react'
-import { DialogClose } from '@radix-ui/react-dialog'
-import { taskFormDateNameType, taskFormInputNameType, taskFormSchema, taskLabel } from '@/models/taskForm'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import React, { type Dispatch, type SetStateAction, useState } from 'react';
+import { taskFormDateNameType, taskFormInputNameType, taskFormSchema, taskLabel } from '@/models/taskForm';
 
 type Props = {
   project: IProject,
@@ -197,4 +196,4 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
   )
 }
 
-export default AddingTask
+export default AddingTask;
