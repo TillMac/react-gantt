@@ -39,27 +39,29 @@ const Sidebar = ({ data, setActiveProject, setReloadProjectListData }: Props) =>
   };
 
   return (
-    <div className="xl:w-1/5 lg:w-1/3 flex flex-col gap-4 sidebar--background h-screen sticky z-10 p-0 mt-0 ml-0 mr-auto border-r-2 border-gray">
-      <section className="w-full pl-6 pt-6 flex flex-wrap items-center">
-        <AddingProject uId={currentUser.uid} onProjectAdded={() => setReloadProjectListData(true)} />
-        <NavLink to='/dashboard' className='w-5/6 m-0 px-3 py-1 justify-start flex items-center hover:bg-gray hover:border-gray rounded-xl' style={({ isActive }) => {
-          return {
-            backgroundColor: isActive ? "#545454" : "",
-            color: isActive ? 'white' : '#545454',
-          };
-        }}>
-        {
-          ({isActive}) => (
-            <>
-              <FontAwesomeIcon icon={faTableCellsLarge} className={`${isActive ? 'text-theme' : 'text-text'} text-xl`} />
-              <h4 className={`text-xl pl-4 font-mono ${isActive ? 'text-white' : 'text-text'}`}>Dashboard</h4>
-            </>
-          )
-        }
-        </NavLink>
+    <div className="xl:w-1/5 lg:w-1/3 flex flex-col sidebar--background h-screen sticky z-10 p-0 mt-0 ml-0 mr-auto border-r-2 border-gray">
+      <section className='flex flex-col flex-1 pl-6 gap-4'>
+        <section className="w-full pt-6 flex flex-wrap items-center">
+          <NavLink to='/dashboard' className='w-5/6 m-0 px-3 py-1 justify-start flex items-center hover:bg-gray hover:border-gray rounded-xl' style={({ isActive }) => {
+            return {
+              backgroundColor: isActive ? "#545454" : "",
+              color: isActive ? 'white' : '#545454',
+            };
+          }}>
+          {
+            ({isActive}) => (
+              <>
+                <FontAwesomeIcon icon={faTableCellsLarge} className={`${isActive ? 'text-theme' : 'text-text'} text-xl`} />
+                <h4 className={`text-xl pl-4 font-mono ${isActive ? 'text-white' : 'text-text'}`}>Dashboard</h4>
+              </>
+            )
+          }
+          </NavLink>
+        </section>
+        <ProjectList data={data!} setActiveProject={setActiveProject} />
       </section>
-      <ProjectList data={data!} setActiveProject={setActiveProject} />
-      <section className='w-full px-4 py-2 mb-0 mt-auto flex items-center border-t-2 border-gray'>
+      <AddingProject uId={currentUser.uid} onProjectAdded={() => setReloadProjectListData(true)} />
+      <section className='w-full py-2 mb-0 mt-auto flex items-center border-t-2 border-gray'>
         {
           (!isAnonymous) ? null : (
             <Button
