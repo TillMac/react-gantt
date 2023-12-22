@@ -24,7 +24,7 @@ const ProjectList = ({ data, setActiveProject }: Props) => {
   }, [location, data]);
 
   return (
-    <section className="pl-6 flex flex-wrap gap-2 w-full items-center">
+    <section className="flex flex-wrap gap-4 w-full items-center max-h-[70vh]">
       {
         !data || data.length === 0 ? (
           <h4 className='text-lg pl-4 text-text font-mono italic'>No Projects.</h4>
