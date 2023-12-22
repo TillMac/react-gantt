@@ -36,7 +36,7 @@ function AppLayout() {
   }, [reloadProjectListData]);  
 
   return (
-    <div className='w-screen flex'>
+    <div className='w-screen h-screen flex flex-row'>
       <Sidebar data={data} setActiveProject={setActiveProject} setReloadProjectListData={setReloadProjectListData} />
       <Outlet context={{ activeProject, setReloadProjectListData }} />
     </div>
