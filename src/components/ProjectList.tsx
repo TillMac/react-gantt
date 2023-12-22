@@ -46,7 +46,7 @@ const ProjectList = ({ data, setActiveProject }: Props) => {
           .map((project: IProject, idx: number) => {
             if (project) {
               return (
-                <NavLink to={`/${project.id}`} key={idx} className='w-5/6 m-0 px-3 py-1 justify-start items-center flex hover:bg-gray hover:border-gray rounded-xl'  style={({ isActive }) => {
+                <NavLink to={`/${project.id}`} key={idx} className='w-5/6 m-0 px-3 py-1 justify-start items-center flex hover:bg-gray hover:border-gray rounded-xl' style={({ isActive }) => {
                   return {
                     backgroundColor: isActive ? "#545454" : "",
                     color: isActive ? 'white' : '#545454',
