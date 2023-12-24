@@ -61,6 +61,7 @@
     "react-router-dom": "^6.17.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
+    "use-dark-mode-ts": "^1.0.2",
     "uuid": "^9.0.1",
     "zod": "^3.22.2"
   },
