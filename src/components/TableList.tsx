@@ -14,6 +14,8 @@ import { Dispatch, SetStateAction } from "react";
 import CustomContextMenu from "./CustomContextMenu";
 import { Task } from "gantt-task-react";
 
+const today = dayjs();
+
 type Props = {
   taskData: ITask[] | null,
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>,
@@ -56,7 +58,9 @@ const TableList = ({ taskData, setIsDeleteModalOpen, setIsEditModalOpen, setModa
                   <Row key={task.id} item={task} onDoubleClick={(task) => handleDoubleClick(task)}>
                     <Cell className="h-16 text-left !py-4 !pl-4 border-l-2 border-b-2 border-gray-300">{task.name}</Cell>
                     <Cell className="h-16 text-left !pl-4  border-l-2 border-b-2 border-gray-300">{dayjs(task.start).format('YYYY/MM/DD')}</Cell>
-                    <Cell className="h-16 text-left !pl-4  border-l-2 border-b-2 border-gray-300">{dayjs(task.end).format('YYYY/MM/DD')}</Cell>
+                    <Cell className="h-16 text-left !pl-4  border-l-2 border-b-2 border-gray-300" style={{
+                      color: (today.isAfter(dayjs(task.end).format('YYYY/MM/DD')) && task.status !== 'DONE' && task.status !=='WAIVED' ? '#DC2626' : null)
+                    }}>{dayjs(task.end).format('YYYY/MM/DD')}</Cell>
                     <Cell className="h-16 text-left !pl-4  border-l-2 border-b-2 border-gray-300">{task.status}</Cell>
                     <Cell className="h-16 text-left !pl-4  border-l-2 border-r-2 border-b-2 border-gray-300">{`${task.progress}%`}</Cell>
                   </Row>
