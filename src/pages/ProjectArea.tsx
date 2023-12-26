@@ -77,7 +77,7 @@ const ProjectArea = () => {
       method: 'GET',
       accessToken: currentUser.accessToken,
     });
-  }
+  };
 
   const taskUpdateSubmitHandler = (taskFormData: z.infer<typeof taskFormSchema>) => {
     if (modalTask) {
@@ -128,7 +128,7 @@ const ProjectArea = () => {
       });
     }
     setReloadProjectDataCount((number) => number += 1);
-    };
+  };
   
   useEffect(() => {
     if (data) {
