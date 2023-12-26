@@ -155,6 +155,10 @@ tbody tr:last-child > th:last-child {
     background-color: rgb(229 231 235);
   }
 
+  :root .menu__tooltip--background {
+    background-color: rgb(229 231 235);
+  }
+
   /* sidebar logout */
   :root .sidebar__logout:hover {
     background-color: #C0C0C0;
@@ -191,6 +195,10 @@ tbody tr:last-child > th:last-child {
   
   :root .menu__calendar--background {
     background-color: #808080;
+  }
+
+  :root .menu__tooltip--background {
+    background-color: #242424;
   }
 
   /* row 右側甘特圖顏色 */
