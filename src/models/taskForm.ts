@@ -11,8 +11,8 @@ const taskLabel: Record<string, string> = {
 
 const taskFormSchema = z.object({
   taskName: z.string().min(1, {
-    message: 'Task name must be at least 1 character, and lower than 20 characters.',
-  }).max(20),
+    message: 'Task name must be at least 1 character.',
+  }),
   status: z.union([z.literal('TODO'), z.literal('IN PROGRESS'), z.literal('DONE'), z.literal('WAIVED')]),
   start: z.date({
     required_error: "A date of start date is required.",
@@ -46,6 +46,9 @@ const taskFormSchema = z.object({
 }, {
   message: 'For milestones, the start date must be equal to the due date.',
   path: ['end'],
+}).refine(data => data.taskName.trim() !== '', {
+  message: "Task name shouldn't be blank.",
+  path: ['taskName'],
 });
 
 type taskFormInputNameType = "taskName";
