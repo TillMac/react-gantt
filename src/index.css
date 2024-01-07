@@ -80,6 +80,11 @@ tbody tr:last-child > th:last-child {
   max-height: 80vh;
 }
 
+/* TableList Taskname Cell */
+.table__taskname > div {
+  white-space: normal !important;
+}
+
 /* gantt 後方文字 */
 :root ._3zRJQ {
   mix-blend-mode: plus-lighter;
