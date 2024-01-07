@@ -27,6 +27,8 @@ type Props = {
 
 const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => {
   const [isAddingModalOpen, setIsAddingModalOpen] = useState<boolean>(false);
+  const [isStartCalendarOpen, setIsStartCalendarOpen] = useState<boolean>(false);
+  const [isDueCalendarOpen, setIsDueCalendarOpen] = useState<boolean>(false);
   const { setRequest } = useProjectFetch();
   const { currentUser } = useAuth();
 
@@ -105,8 +107,24 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
                               <FormLabel className='text-left'>{taskLabel[label]}</FormLabel>
                               <section className='col-span-3'>
                                 <FormControl>
-                                <Popover>
-                                  <PopoverTrigger asChild>
+                                <Popover
+                                  open={(label.includes('start') ? isStartCalendarOpen : isDueCalendarOpen)}
+                                  onOpenChange={(open) => {
+                                    if (!open) {
+                                      (label.includes('start')) ? setIsStartCalendarOpen(false) : setIsDueCalendarOpen(false);
+                                    }
+                                  }}
+                                >
+                                  <PopoverTrigger
+                                    onClick={() => {
+                                      if (label.includes('start')) {
+                                        setIsStartCalendarOpen(true);
+                                      } else {
+                                        setIsDueCalendarOpen(true);
+                                      }
+                                    }}
+                                    asChild
+                                  >
                                     <Button
                                       variant={"outline"}
                                       className={cn(
@@ -122,7 +140,14 @@ const AddingTask: React.FC<Props> = ({ project, setReloadProjectDataCount }) => 
                                     <Calendar
                                       mode="single"
                                       selected={field.value}
-                                      onSelect={field.onChange}
+                                      onSelect={(e) => {
+                                        field.onChange(e);
+                                        if (label.includes('start')) {
+                                          setIsStartCalendarOpen(false);
+                                        } else {
+                                          setIsDueCalendarOpen(false);
+                                        }
+                                      }}
                                       initialFocus
                                       className='pointer-events-auto'
                                     />
