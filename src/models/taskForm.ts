@@ -28,9 +28,24 @@ const taskFormSchema = z.object({
   progress: z.number().min(0, {
     message: 'The progress(%) must between 0 and 100.'
   }).max(100)
-}).refine(data => data.start < data.end, {
+}).refine(data => {
+  if (data.type === 'task') {
+    return data.start < data.end;
+  }
+  return true;
+}, {
   message: 'The start date must be before the end date.',
   path: ['start'],
+}).refine(data => {
+  // 當類型為 'milestone' 時，檢查開始和結束日期是否相同
+  if (data.type === 'milestone') {
+    return data.start.toISOString().split('T')[0] === data.end.toISOString().split('T')[0];
+  }
+  // 對於非 'milestone' 類型，不應用此規則
+  return true;
+}, {
+  message: 'For milestones, the start date must be equal to the due date.',
+  path: ['end'],
 });
 
 type taskFormInputNameType = "taskName";
