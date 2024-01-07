@@ -83,6 +83,7 @@ tbody tr:last-child > th:last-child {
 /* TableList Taskname Cell */
 .table__taskname > div {
   white-space: normal !important;
+  word-wrap: break-word;
 }
 
 /* gantt 後方文字 */
