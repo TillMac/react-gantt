@@ -46,6 +46,9 @@ const taskFormSchema = z.object({
 }, {
   message: 'For milestones, the start date must be equal to the due date.',
   path: ['end'],
+}).refine(data => data.taskName.trim() !== '', {
+  message: "Task name shouldn't be blank.",
+  path: ['taskName'],
 });
 
 type taskFormInputNameType = "taskName";
